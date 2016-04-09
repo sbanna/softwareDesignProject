@@ -51,12 +51,12 @@ def login_page():
         return redirect(url_for("homePage"))
       else:
         print "failed"
-        return render_template("login.html", responsetext="You entered a invalid username/password")
+        return render_template("zold_login.html", responsetext="You entered a invalid username/password")
 
 
     elif request.form["submit"] == "create_account":
       return redirect(url_for("create"))  # redirect to the users page
-  return render_template("login.html")
+  return render_template("zold_login.html")
 
 # This is the create page
 # Redirects here from the index page (AKA login page)
@@ -71,7 +71,7 @@ def create():
     # check to see if this user_name exists because they must be unique!
     if users.has_key(userName):
       print "error key already exists"
-      return render_template("create.html", responsetext = "User Name already taken :(")
+      return render_template("zold_create.html", responsetext = "User Name already taken :(")
     else:
       print "Key successfully created! "
       writeKey(users,name,userName,password) # write the key to the dictionary and to the file
@@ -80,7 +80,7 @@ def create():
       # followFriend("") 
       return redirect(url_for("login_page"))
 
-  return render_template("create.html")
+  return render_template("zold_create.html")
 
 # read the users from the file
 def readUsers(users):
@@ -251,7 +251,7 @@ def homePage():
      
 
 
-  return render_template("homepage.html", username = username, messages = listStuff)
+  return render_template("zold_homepage.html", username = username, messages = listStuff)
 
 
 @app.route('/search/', methods = ['post','get'])
@@ -295,7 +295,7 @@ def search():
   #print 'Printing user input ' + userinput
   print 'Printing all of my friends  '
   print (tweets)
-  return render_template("search.html", potentialFriends = potentialFriends, tweets = tweets, myFriends = myFriends)
+  return render_template("zold_search.html", potentialFriends = potentialFriends, tweets = tweets, myFriends = myFriends)
 
 
 # Finds all the friends based on the name provided
