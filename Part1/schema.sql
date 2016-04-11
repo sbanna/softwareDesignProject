@@ -8,7 +8,7 @@ CREATE TABLE groupdeal_test.user_account
 */
 CREATE TABLE user_account
 (
-	user_id 	int				NOT NULL 	PRIMARY KEY,
+	user_id 	int				NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
 	username 	varchar(255) 	NOT NULL,
 	password 	varchar(255) 	NOT NULL,
 	address		varchar(255)

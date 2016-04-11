@@ -45,6 +45,26 @@ def logout():
 def vendor_home():
 	return render_template('vendor_home.html')
 	
+@app.route('/add_user', methods=['POST'])
+def add_user():
+	if (g.db.execute('select username from user_account'):
+		flash('This username is already in use.')
+	else:
+		g.db.execute('INSERT INTO user_account (username, password, address) \
+					 values (?, ?, ?)',
+					 [request.form['username'], 
+					  request.form['password'], 
+					  request.form['address']])
+		if (request.form['type'] == 'consumer'):
+			g.db.execute('INSERT INTO consumer_account (username) values (?)',
+						 [request.form['username']])
+		else:
+			g.db.execute('INSERT INTO vendor_account (username) values (?, ?)',
+						 [request.form['username']])
+		g.db.commit()
+		flash("New user was successfully added")
+	return redirect(url_for('add_user'))
+	
 @app.route('/consumer_home')
 def consumer_home():
 	return render_template('consumer_home.html')
