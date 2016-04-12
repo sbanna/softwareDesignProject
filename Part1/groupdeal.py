@@ -65,6 +65,16 @@ def add_user():
 		flash("New user was successfully added")
 	return redirect(url_for('add_user'))
 	
+@app.route('/add_product', method=['POST'])
+def add_product():
+	g.db.execute('INSERT INTO product (price, image, description, vendor_id) \
+				  values (?, ?, ?, ?)'
+				 [request.form['price'], request.form['image'], 
+				  request.form['description'], request.form['vendor_id']])
+	g.db.commit()
+	flash("New product was successfully added")
+	return redirect(url_for('add_product'))
+
 @app.route('/consumer_home')
 def consumer_home():
 	return render_template('consumer_home.html')
