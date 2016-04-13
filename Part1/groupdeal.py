@@ -19,7 +19,7 @@ app.config.from_object(__name__)
 
 @app.route('/')
 def home():
-	return render_template('index.html')
+	return render_template('home.html')
 	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -45,6 +45,10 @@ def logout():
 def vendor_home():
 	return render_template('vendor_home.html')
 	
+@app.route('/sign_up')
+def sign_up():
+	return render_template('sign_up.html')
+	
 @app.route('/add_user', methods=['POST'])
 def add_user():
 	if (g.db.execute('select username from user_account')):
@@ -63,7 +67,25 @@ def add_user():
 						 [request.form['username']])
 		g.db.commit()
 		flash("New user was successfully added")
-	return redirect(url_for('add_user'))
+	return redirect(url_for('sign_up'))
+	
+@app.route('/simple_campaign')
+def simple_campaign():
+	return render_template("simpleCampaign.html",
+							title = "GroupDeal Hoodie",
+							description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+							currentPrice = "$50.00",
+							nextPrice = "$40.00",
+							amountContributers = 10,
+							amountContriNeeded = 15,)
+							
+@app.route('/pledge', methods = ['GET', 'POST'])
+def add_pledge():
+	g.db.execute('INSERT INTO user_account (user_id, username, password) values (?, ?, ?)',
+				 [request.form['price_willing'], request.form['name_first'], request.form['name_last']])
+	g.db.commit()
+	flash("Pledge was successfully added")
+	return redirect(url_for('simple_campaign'))
 	
 @app.route('/add_product')
 def add_product():
