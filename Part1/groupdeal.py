@@ -8,8 +8,8 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 app = Flask(__name__)
 
 # config
-# DATABASE = os.path.join(app.root_path, 'groupdeal_test.db')
-DATABASE = 'E:\git_repos\softwareDesignProject\Part1\groupdeal_test.db'
+DATABASE = os.path.join(app.root_path, 'groupdeal_test.db')
+# DATABASE = 'E:\git_repos\softwareDesignProject\Part1\groupdeal_test.db'
 DEBUG = True
 SECRET_KEY = 'development_key'
 USERNAME = 'admin'
