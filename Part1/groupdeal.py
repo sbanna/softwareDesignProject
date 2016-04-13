@@ -47,7 +47,7 @@ def vendor_home():
 	
 @app.route('/add_user', methods=['POST'])
 def add_user():
-	if (g.db.execute('select username from user_account'):
+	if (g.db.execute('select username from user_account')):
 		flash('This username is already in use.')
 	else:
 		g.db.execute('INSERT INTO user_account (username, password, address) \
@@ -65,7 +65,7 @@ def add_user():
 		flash("New user was successfully added")
 	return redirect(url_for('add_user'))
 	
-@app.route('/add_product', method=['POST'])
+@app.route('/add_product')
 def add_product():
 	g.db.execute('INSERT INTO product (price, image, description, vendor_id) \
 				  values (?, ?, ?, ?)'
