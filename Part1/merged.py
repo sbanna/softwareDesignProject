@@ -8,6 +8,41 @@ userTweets = {} # holds all the tweets of all the users
 listStuff = [] # holds this users tweets
 userFriends = {} # holds all the friends of the user
 
+'''--------------------------------------------------
+GGGGGGGG DDDDDD        CCCCCC OOOOOO DDDDDD  EEEEEE
+GG       D    DD       CC     O    O D    DD E
+GG       D     D       CC     O    O D     D E 
+GG  GGGG D     D       CC     O    O D     D EEEEEE
+GG    GG D     D       CC     O    O D     D E
+GG    GG D    DD       CC     O    O D    DD E
+GGGGGGGG DDDDDD        CCCCCC OOOOOO DDDDDD  EEEEEE
+-----------------------------------------------------'''
+
+@app.route('/simple_campaign', methods = ['post','get'])
+def simple_campaign():
+
+  return render_template("simpleCampaign.html",
+                        title = "GroupDeal Hoodie",
+                        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        currentPrice = "$50.00",
+                        nextPrice = "$40.00",
+                        amountContributers = 10,
+                        amountContriNeeded = 15,
+                        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''----------------------------------------------------------------------
 
   - Everything below is the main login page. It allows the user to:
