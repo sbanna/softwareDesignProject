@@ -51,7 +51,6 @@ def logout():
     return redirect(url_for('show_entries'))
 	
 @app.route('/vendor_home')
-@login_required
 def vendor_home():
 	return render_template('vendor_home.html')
 	
@@ -90,7 +89,6 @@ def simple_campaign():
 							amountContriNeeded = 15,)
 							
 @app.route('/pledge', methods = ['GET', 'POST'])
-@login_required
 def add_pledge():
 	g.db.execute('INSERT INTO user_account (user_id, username, password) values (?, ?, ?)',
 				 [request.form['price_willing'], request.form['name_first'], request.form['name_last']])
@@ -99,7 +97,6 @@ def add_pledge():
 	return redirect(url_for('simple_campaign'))
 	
 @app.route('/add_product')
-@login_required
 def add_product():
 	g.db.execute('INSERT INTO product (price, image, description, vendor_id) \
 				  values (?, ?, ?, ?)'
@@ -110,7 +107,6 @@ def add_product():
 	return redirect(url_for('add_product'))
 
 @app.route('/consumer_home')
-@login_required
 def consumer_home():
 	return render_template('consumer_home.html')
 
