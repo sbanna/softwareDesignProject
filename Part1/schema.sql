@@ -8,7 +8,7 @@ CREATE TABLE groupdeal_test.user_account
 */
 CREATE TABLE user_account
 (
-	user_id 	int				NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
+	user_id 	int				NOT NULL 	PRIMARY KEY,
 	username 	varchar(255) 	NOT NULL,
 	password 	varchar(255) 	NOT NULL,
 	address		varchar(255)
@@ -25,7 +25,7 @@ CREATE TABLE product
 	product_id 	int 			NOT NULL 	PRIMARY KEY,
 	price 		int				NOT NULL,
 	image 		blob,
-	description varchar(1023s),
+	description varchar(1023),
 	vendor_id	int				NOT NULL,
 	FOREIGN KEY(vendor_id) 		REFERENCES 	vendor(vendor_id)
 );
