@@ -1,6 +1,7 @@
 # import stuff
 import sqlite3
 import os
+import tempvariables
 from contextlib import closing
 from functools import wraps
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
@@ -30,6 +31,10 @@ app.config.from_object(__name__)
 @app.route('/')
 def home():
 	return render_template('home.html')
+
+@app.route('/test1')
+def test1():
+	return render_template('allprojects.html',thelist=tempvariables.listofProjects)
 	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -83,8 +88,9 @@ def add_user():
 @app.route('/simple_campaign')
 def simple_campaign():
 	return render_template("simpleCampaign.html",
-							title = "GroupDeal Hoodie",
-							description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+							title = tempvariables.campaign.get('title'),
+							author = tempvariables.campaign.get('author'),
+							description = tempvariables.campaign.get('description'),
 							currentPrice = "$50.00",
 							nextPrice = "$40.00",
 							amountContributers = 10,
