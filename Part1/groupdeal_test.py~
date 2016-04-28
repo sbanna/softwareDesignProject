@@ -1,5 +1,5 @@
 import os
-import flaskr
+import groupdeal
 import unittest
 import tempfile
 
