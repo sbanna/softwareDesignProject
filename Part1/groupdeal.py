@@ -85,6 +85,45 @@ def add_user():
 		flash("New user was successfully added")
 	return redirect(url_for('sign_up'))
 	
+@app.route('/create_product')
+@login_required
+def create_product():
+	return render_template("create_product.html")
+
+@app.route('/add_product', methods = ['POST']) 
+def add_product():
+	g.db.execute('INSERT INTO product (product_id, price, image, description, vendor_id) \
+				  values (?, ?, ?, ?, ?)',
+				  (request.form['product_id'],
+				   request.form['price'], 
+				   request.form['image'], 
+				   request.form['description'], 
+				   request.form['vendor_id']))
+	g.db.commit()
+	flash("New product was added successfully")
+	return render_template("create_product.html")
+	
+@app.route('/choose_product')
+def choose_product():
+	return render_template("choose_product.html")
+	
+@app.route('/show_product', methods = ['GET', 'POST'])
+def show_product():
+	product_qs = g.db.execute('SELECT product_id, price, image, description, vendor_id \
+							   FROM product WHERE product_id = ?', 
+							   [request.form['product_id']])
+	product_info = []
+	for i in product_qs:
+		for j in i:
+			product_info.append(j)
+	return render_template("simpleCampaign.html",
+							title = "GroupDeal Hoodie",
+							description = product_info[3],
+							currentPrice = product_info[1],
+							nextPrice = "$40.00",
+							amountContributers = 10,
+							amountContriNeeded = 15,)
+	
 @app.route('/simple_campaign')
 def simple_campaign():
 	return render_template("simpleCampaign.html",
@@ -99,22 +138,11 @@ def simple_campaign():
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required
 def add_pledge():
-	g.db.execute('INSERT INTO user_account (user_id, username, password) values (?, ?, ?)',
-				 [request.form['price_willing'], request.form['name_first'], request.form['name_last']])
+	g.db.execute('INSERT INTO contributions (product_id, consumer_id, amount) values (?, ?, ?)',
+				 [request.form['product_id'], request.form['consumer_id'], request.form['amount']])
 	g.db.commit()
 	flash("Pledge was successfully added")
 	return redirect(url_for('simple_campaign'))
-	
-@app.route('/add_product')
-@login_required
-def add_product():
-	g.db.execute('INSERT INTO product (price, image, description, vendor_id) \
-				  values (?, ?, ?, ?)'
-				 [request.form['price'], request.form['image'], 
-				  request.form['description'], request.form['vendor_id']])
-	g.db.commit()
-	flash("New product was successfully added")
-	return redirect(url_for('add_product'))
 
 @app.route('/consumer_home')
 @login_required
