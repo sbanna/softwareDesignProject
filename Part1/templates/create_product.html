@@ -1,0 +1,25 @@
+<!DOCTYPE>
+<html>
+	<body>
+		<div>
+		    <form action = "{{ url_for('add_product') }}" method = "POST">
+				<p>
+				Product Number:
+				<input type = "text" placeholder = "Product Number" name = "product_id"/> 
+				<br> Price: 
+				<input type = "text" placeholder = "Price" name = "price"/>
+				<br> Image: 
+				<input type = "file" placeholder = "Image" name = "image"/> 
+				<br> Description: 
+				<input type = "text" placeholder = "Description" name = "description"/>
+				<br> Vendor Number: 
+				<input type = "text" placeholder = "Vendor Number" name = "vendor_id"/> 
+				</p>
+				<p>
+				<input type = "submit" name = "submit" value="Create Product">
+				</p>
+			</form>
+
+		</div>
+	</body>
+</html>
