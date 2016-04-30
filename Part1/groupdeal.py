@@ -135,7 +135,7 @@ def simple_campaign():
 							amountContributers = 10,
 							amountContriNeeded = 15,)
 							
-@app.route('/pledge', methods = ['GET', 'POST'])
+@app.route('/add_pledge', methods = ['GET', 'POST'])
 @login_required
 def add_pledge():
 	g.db.execute('INSERT INTO contributions (product_id, consumer_id, amount) values (?, ?, ?)',
@@ -143,6 +143,14 @@ def add_pledge():
 	g.db.commit()
 	flash("Pledge was successfully added")
 	return redirect(url_for('simple_campaign'))
+	
+@app.route('/change_price', methods = ['POST'])
+def change_price():
+	g.db.execute('UPDATE product SET price = ? WHERE product_id = ?',
+				 [request.form['price'], request.form['product_id']])
+	g.db.commit()
+	flash("Price was successfully changed")
+	return redirect(url_for('show_product'))
 
 @app.route('/consumer_home')
 @login_required
