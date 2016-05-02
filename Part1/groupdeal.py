@@ -41,11 +41,14 @@ def vendor_campaigns(vendor_name):
 	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
 # MY PAGE
-# GETS ALL PROJECTS IN BY vender_name
-@app.route('/my_projects', methods = ['GET', 'POST'])
-def my_campaigns(vendor_name):
+# GETS ALL PROJECTS THAT I PLEDGED
+@app.route('/my_pledges', methods = ['GET', 'POST'])
+def my_pledges():
 	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
+@app.route('/add_campaign')
+def add_campaign():
+	return render_template("add_project.html")
 
 
 
@@ -136,10 +139,6 @@ def show_product():
 							nextPrice = "$40.00",
 							amountContributers = 10,
 							amountContriNeeded = 15,)
-	
-@app.route('/add_project')
-def add_project():
-	return render_template("add_project.html")
 
 @app.route('/campaign')
 def campaign():
