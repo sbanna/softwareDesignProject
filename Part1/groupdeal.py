@@ -32,10 +32,6 @@ app.config.from_object(__name__)
 def home():
 	return render_template('home.html')
 
-@app.route('/test1')
-def test1():
-	return render_template('allprojects.html',thelist=tempvariables.listofProjects)
-	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -86,15 +82,15 @@ def add_user():
 	return redirect(url_for('sign_up'))
 	
 @app.route('/create_product')
-@login_required
+#@login_required
 def create_product():
 	return render_template("create_product.html")
 
 @app.route('/add_product', methods = ['POST']) 
 def add_product():
-	g.db.execute('INSERT INTO product (product_id, price, image, description, vendor_id) \
+	g.db.execute('INSERT INTO product (product_name, price, image, description, vendor_id) \
 				  values (?, ?, ?, ?, ?)',
-				  (request.form['product_id'],
+				  (request.form['product_name'],
 				   request.form['price'], 
 				   request.form['image'], 
 				   request.form['description'], 
@@ -124,16 +120,17 @@ def show_product():
 							amountContributers = 10,
 							amountContriNeeded = 15,)
 	
-@app.route('/simple_campaign')
-def simple_campaign():
-	return render_template("simpleCampaign.html",
-							title = tempvariables.campaign.get('title'),
-							author = tempvariables.campaign.get('author'),
-							description = tempvariables.campaign.get('description'),
-							currentPrice = "$50.00",
-							nextPrice = "$40.00",
-							amountContributers = 10,
-							amountContriNeeded = 15,)
+@app.route('/add_project')
+def add_project():
+	return render_template("add_project.html")
+	
+@app.route('/all_projects')
+def all_projects():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
+@app.route('/edit_project')
+def projectForm():
+	return render_template("addproject.html", projects = tempvariables.all_projects)
 							
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="layout-2cols">
+        <div class="content grid_8">
+            <div class="single-page">
+                <div class="wrapper-box box-post-comment">
+                    <h2 class="common-title">Contact Us</h2>
+                    <div class="box-white">
+                        <form id="contact-form" class="clearfix" action="processForm.php" method="post">
+                             <p class="rs pb30">Pellentesque laoreet sapien id lacus luctus non fringilla elit lobortis. Fusce augue diam, tempor posuere pharetra sed, feugiat non sapien.</p>
+                            <div class="form form-post-comment">
+                                 <div class="input"> 
+                                    <label for="txt_name_contact">
+                                        <input id="txt_name_contact" type="text" name="name" class="txt fill-width txt-name" placeholder="Title Of Campaign"/>
+                                    </label>
+                                    <label for="txt_email_contact">
+                                        <input id="txt_email_contact" type="email" name="email" class="txt fill-width txt-email" placeholder="Enter Your Email" value="info@megadrupal.com"/>
+                                    </label>
+                                    <label for="txt_content_contact">
+                                        <textarea name="message" id="txt_content_contact" cols="30" rows="10" class="txt fill-width" font-family="Courier"placeholder="Your message"></textarea>
+                                    </label>
+                                </div>
+                                <div class="clear"></div>
+                                <p class="rs ta-r clearfix">
+                                    <span id="response"></span>
+                                   
+                                   <input type="submit" class="btn btn-white btn-submit-comment" value="Send">
+                               </p>
+                            </div>
+                        </form>
+                    </div>
+                </div><!--end: .box-list-comment -->
+            </div>
+        </div><!--end: .content -->
+        <div class="clear"></div>
+    </div>
+{% endblock %}
+</html>
