@@ -28,9 +28,26 @@ def login_required(f):
 
 app.config.from_object(__name__)
 
+# THIS IS THE HOME PAGE
+# GETS ALL CAMPAIGNS, STORES IN projects VARIABLE 
 @app.route('/')
-def home():
-	return render_template('home.html')
+def all_projects():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
+# VENDOR PAGE
+# GETS ALL CAMPAIGNS BY vender_name
+@app.route('/vendor/<string:vendor_name>', methods = ['GET', 'POST'])
+def vendor_campaigns(vendor_name):
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
+# MY PAGE
+# GETS ALL PROJECTS IN BY vender_name
+@app.route('/my_projects', methods = ['GET', 'POST'])
+def my_campaigns(vendor_name):
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -51,15 +68,6 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
-
-@app.route('/all_projects')
-def all_projects():
-	return render_template("all_projects.html", projects = tempvariables.all_projects)
-	
-@app.route('/all_projects/<string:campaignname>', methods = ['GET', 'POST'])
-def test(campaignname):
-	print(campaignname);
-	return render_template("choose_product.html")
 
 @app.route('/vendor_home')
 @login_required
