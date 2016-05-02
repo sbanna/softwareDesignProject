@@ -46,6 +46,14 @@ CREATE TABLE consumer_account
 	FOREIGN KEY(consumer_id)	REFERENCES  user_account(user_id)
 );
 
+CREATE TABLE payment_info
+(
+	consumer_id	INTEGER			NOT NULL,
+	card_num	BIGINT			NOT NULL,
+	security	INTEGER,
+	FOREIGN KEY(consumer_id)	REFERENCES	consumer_account(consumder_id)
+)
+
 CREATE TABLE contributions
 (
 	campaign_id  	INTEGER        	NOT NULL,
