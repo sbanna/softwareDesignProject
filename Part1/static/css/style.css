@@ -27,14 +27,9 @@ html{
     font-size: 100%;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    background-image: url("../images/whitebackground.jpg"), no-repeat;
-    background-position: center top;
-    background-size: 100% auto;
-
 }
 body{
     background: #f9f9f9;
-    background-image: url("../images/whitebackground.jpg");
     margin: 0;
     font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
@@ -100,6 +95,9 @@ input[type="search"]{
     -webkit-box-sizing: content-box;
     -webkit-appearance: textfield;
 }
+input[type="code"]{
+    font-family: courier;
+}
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button{
     -webkit-appearance: none;
@@ -107,7 +105,8 @@ input[type="search"]::-webkit-search-cancel-button{
 textarea{
     overflow: auto;
     vertical-align: top;
-    resize: none;
+    resize: vertical;
+    font-family: courier;
 }
 
 /* 2.	960 Grid System

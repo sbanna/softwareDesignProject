@@ -32,10 +32,6 @@ app.config.from_object(__name__)
 def home():
 	return render_template('home.html')
 
-@app.route('/test1')
-def test1():
-	return render_template('allprojects.html',thelist=tempvariables.listofProjects)
-	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -124,16 +120,13 @@ def show_product():
 							amountContributers = 10,
 							amountContriNeeded = 15,)
 	
-@app.route('/simple_campaign')
-def simple_campaign():
-	return render_template("simpleCampaign.html",
-							title = tempvariables.campaign.get('title'),
-							author = tempvariables.campaign.get('author'),
-							description = tempvariables.campaign.get('description'),
-							currentPrice = "$50.00",
-							nextPrice = "$40.00",
-							amountContributers = 10,
-							amountContriNeeded = 15,)
+@app.route('/allprojects')
+def allProjects():
+	return render_template("allprojects.html", projects = tempvariables.allprojects)
+
+@app.route('/editProject')
+def projectForm():
+	return render_template("addproject.html", projects = tempvariables.allprojects)
 							
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required

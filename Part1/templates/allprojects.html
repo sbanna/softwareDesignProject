@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+{% extends "layout.html" %}
+{% block content %}
+<div id="wrapper">
+
+    <div class="layout-2cols">
+        <div class="content grid_12">
+            <div class="search-result-page">
+                <div class="top-lbl-val">
+                    <h3 class="common-title"><span class="fc-orange">All Campaigns</span></h3>
+                    <div class="count-result">
+                        <span class="fw-b fc-black">560</span> projects found in this category
+                    </div>
+                </div>
+
+                <div class="list-project-in-category">
+                    <div id="list-project-ajax" class="list-project">
+                        {% for project in projects %}
+                            <div class="grid_3">
+                                <div class="project-short sml-thumb">
+                                    <div class="top-project-info">
+                                        <div class="content-info-short clearfix">
+                                            <a href="#" class="thumb-img">
+                                                <img src="images/ex/th-292x204-1.jpg" alt="$TITLE">
+                                            </a>
+                                            <div class="wrap-short-detail">
+                                                <h3 class="rs acticle-title"><a class="be-fc-orange" href="#">{{project.title}}</a></h3>
+                                                <p class="rs tiny-desc">by <a href="#" class="fw-b fc-gray be-fc-orange">{{project.author}}</a></p>
+                                                <p class="rs title-description">{{project.shortDescription}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-project-info clearfix">
+                                        
+                                        <div class="group-fee clearfix">
+                                            
+                                            <div class="fee-item">
+                                                <p class="rs lbl">Pledged</p>
+                                                <span class="val">${{project.amountCommitted}}</span>
+                                            </div>
+                                            <div class="sep"></div>
+                                            <div class="fee-item">
+                                                <p class="rs lbl">Days Left</p>
+                                                <span class="val">{{project.daysLeft}}</span>
+                                            </div>
+                                            <div class="sep"></div>
+                                            <div class="fee-item">
+                                                <p class="rs lbl"># Backers</p>
+                                                <span class="val">{{project.amountCommitted}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="line-progress">
+                                            <div class="bg-progress">
+                                                <span  style="width: {{project.percentCommitted}}%; background:#11EE11"></span>
+                                            </div>
+                                        </div>
+                                        <div class="group-fee clearfix">
+                                            <div class="fee-item">
+                                                <p class="rs lbl">Curr. Price</p>
+                                                <span class="val">${{project.currentPrice}}</span>
+                                            </div>
+                                            <div class="sep"></div>
+                                            <div class="fee-item">
+                                                <p class="rs lbl">Next Price</p>
+                                                <span class="val">${{project.nextPrice}}</span>
+                                            </div>
+                                            <div class="fee-item">
+                                                <p class="rs lbl">% Committed</p>
+                                                <span class="val">{{project.percentCommitted}}</span>
+                                            </div>
+
+                                            
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div><!--end: .grid_3 > .project-short-->
+                        {% endfor %}
+                        <div class="clear"></div>
+                    </div>
+                </div><!--end: .list-project-in-category -->
+            </div><!--end: .search-result-page -->
+        </div><!--end: .content -->
+        <!-- REMOVED SIDEBAR -->
+        <div class="clear"></div>
+    </div>
+
+</div>
+{% endblock %}
+</html>

@@ -16,3 +16,54 @@ listofProjects = [
 			];
 
 #
+
+allprojects = [
+		{
+			'image':'theUrl', 
+			'title':'campaignTitle1', 
+			'author': 'Saqib Banna',
+			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
+			'currentPrice':80,
+			'amountCommitted':20,
+			'daysLeft':10,
+			'nextPrice':70,
+			'nextCommitAmount':30,
+			'percentCommitted':40,
+		},
+		{
+			'image':'theUrl', 
+			'title':'campaignTitle2', 
+			'author': 'Robert',
+			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
+			'currentPrice':80,
+			'amountCommitted':20,
+			'daysLeft':10,
+			'nextPrice':40,
+			'nextCommitAmount':50,
+			'percentCommitted':70,
+		},
+		{
+			'image':'theUrl', 
+			'title':'campaignTitle3', 
+			'author': 'Brandon',
+			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
+			'currentPrice':80,
+			'amountCommitted':20,
+			'daysLeft':10,
+			'nextPrice':20,
+			'nextCommitAmount':100,
+			'percentCommitted':20,
+		},
+		{
+			'image':'theUrl', 
+			'title':'campaignTitle4', 
+			'author': 'Alexa',
+			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
+			'currentPrice':60,
+			'amountCommitted':20,
+			'daysLeft':10,
+			'nextPrice':30,
+			'nextCommitAmount':40,
+			'percentCommitted':99,
+		},
+	]
