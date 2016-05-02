@@ -10,7 +10,7 @@ campaign = {'title': 'The Campaign',
 			};
 
 # data relating all projects in the database
-allprojects = [
+all_projects = [
 		{
 			'image':'theUrl', 
 			'title':'campaignTitle1', 

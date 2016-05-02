@@ -82,15 +82,15 @@ def add_user():
 	return redirect(url_for('sign_up'))
 	
 @app.route('/create_product')
-@login_required
+#@login_required
 def create_product():
 	return render_template("create_product.html")
 
 @app.route('/add_product', methods = ['POST']) 
 def add_product():
-	g.db.execute('INSERT INTO product (product_id, price, image, description, vendor_id) \
+	g.db.execute('INSERT INTO product (product_name, price, image, description, vendor_id) \
 				  values (?, ?, ?, ?, ?)',
-				  (request.form['product_id'],
+				  (request.form['product_name'],
 				   request.form['price'], 
 				   request.form['image'], 
 				   request.form['description'], 
@@ -122,10 +122,10 @@ def show_product():
 	
 @app.route('/add_project')
 def add_project():
-	return render_template("add_project.html");
+	return render_template("add_project.html")
 	
 @app.route('/all_projects')
-def allProjects():
+def all_projects():
 	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
 @app.route('/edit_project')
