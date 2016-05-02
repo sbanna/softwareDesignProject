@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block head %}
-<!--     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">    
-    <title>{% block title %}{% endblock %} Glitter</title>
-    <script type=text/javascript src="{{
-  url_for('static', filename='jquery.js') }}"></script>
- -->    
+    {% block head %}  
 
     <title>GroupDeal</title>
     <meta charset="utf-8">
@@ -108,7 +103,7 @@
                 </div>
                 <div class="header-left">
                     <h1 id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt="$SITE_NAME"/></a>
+                        <a href="index.html"><img style="max-height:50px" src="/static/images/quicklogo.png" alt="$SITE_NAME"/></a>
                     </h1>
                     <div class="main-nav clearfix">
                         <div class="nav-item">
@@ -212,7 +207,7 @@
             <div class="copyright">
                 <div class="container_12">
                     <div class="grid_12">
-                        <a class="logo-footer" href="index.html"><img src="images/logo-2.png" alt="$SITE_NAME"/></a>
+                        <a class="logo-footer" href="index.html"><img style="max-height:30px" src="/static/images/quicklogo.png" alt="$SITE_NAME"/></a>
 <!--                         <p class="rs term-privacy">
                             <a class="fw-b be-fc-orange" href="single.html">Terms & Conditions</a>
                             <span class="sep">/</span>

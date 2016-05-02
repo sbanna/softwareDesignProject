@@ -51,7 +51,16 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
+
+@app.route('/all_projects')
+def all_projects():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
 	
+@app.route('/all_projects/<string:campaignname>', methods = ['GET', 'POST'])
+def test(campaignname):
+	print(campaignname);
+	return render_template("choose_product.html")
+
 @app.route('/vendor_home')
 @login_required
 def vendor_home():
@@ -128,9 +137,7 @@ def add_project():
 def campaign():
 	return render_template("project.html")
 	
-@app.route('/all_projects')
-def all_projects():
-	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
 
 @app.route('/edit_project')
 def projectForm():

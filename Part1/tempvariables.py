@@ -12,7 +12,7 @@ campaign = {'title': 'The Campaign',
 # data relating all projects in the database
 all_projects = [
 		{
-			'image':'theUrl', 
+			'image':'http://lorempixel.com/400/300/', 
 			'title':'campaignTitle1', 
 			'author': 'Saqib Banna',
 			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
@@ -24,7 +24,7 @@ all_projects = [
 			'percentCommitted':40,
 		},
 		{
-			'image':'theUrl', 
+			'image':'http://lorempixel.com/400/300/', 
 			'title':'campaignTitle2', 
 			'author': 'Robert',
 			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
@@ -36,7 +36,7 @@ all_projects = [
 			'percentCommitted':70,
 		},
 		{
-			'image':'theUrl', 
+			'image':'http://lorempixel.com/400/300/', 
 			'title':'campaignTitle3', 
 			'author': 'Brandon',
 			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
@@ -48,7 +48,7 @@ all_projects = [
 			'percentCommitted':20,
 		},
 		{
-			'image':'theUrl', 
+			'image':'http://lorempixel.com/400/300/', 
 			'title':'campaignTitle4', 
 			'author': 'Alexa',
 			'shortDescription':'Nam sit amet est sapien, a faucibus purus. Sed commodo facilisis tempus. Pellentesque placerat elementum adipiscing.',
