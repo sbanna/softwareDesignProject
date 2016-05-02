@@ -1,11 +1,3 @@
-/*
-CREATE TABLE groupdeal_test.user_account
-(
-	user_id int NOT NULL PRIMARY KEY,
-	username varchar(255) NOT NULL,
-	password varchar(255) NOT NULL,
-);
-*/
 CREATE TABLE user_account
 (
 	user_id 	INTEGER			NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
@@ -16,20 +8,29 @@ CREATE TABLE user_account
 
 CREATE TABLE vendor
 (
-	vendor_id 	INTEGER 		NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
-	name 		varchar(255) 	NOT NULL
+	vendor_name varchar(255) 	NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
 );
 
-CREATE TABLE product
+CREATE TABLE campaign
 (
-	product_id 	INTEGER			NOT NULL 	PRIMARY KEY 	AUTOINCREMENT,
-	product_name varchar(255) 	NOT NULL,
-	price 		INTEGER				NOT NULL,
-	image 		blob,
-	description varchar(1023),
-	vendor_id	INTEGER			NOT NULL,
-	FOREIGN KEY(vendor_id) 		REFERENCES 	vendor(vendor_id)
+	campaign_id 	INTEGER			NOT NULL 	PRIMARY KEY 	AUTOINCREMENT,
+	campaign_name 	varchar(255) 	NOT NULL,
+	price 			numeric(8,2)	NOT NULL,
+	image 			varchar(255),
+	descr 			varchar(1023),
+	descr_simple	varchar(1023),
+	num_pledges		INTEGER,
+	vendor_name		varchar(255)	NOT NULL,
+	FOREIGN KEY(vendor_name) 		REFERENCES 	vendor(vendor_name)
 );
+
+CREATE TABLE price_points
+(
+	campaign_id 	INTEGER			NOT NULL 	PRIMARY KEY,
+	pledge_num		INTEGER			NOT NULL,
+	new_price		numeric(8,2)	NOT NULL,
+	FOREIGN KEY(campaign_id)		REFERENCES 	campaign(campaign_id)
+)
 
 CREATE TABLE vendor_account
 (
@@ -47,9 +48,9 @@ CREATE TABLE consumer_account
 
 CREATE TABLE contributions
 (
-	product_id  INTEGER        	NOT NULL,
-	consumer_id INTEGER         NOT NULL,
-	amount      numeric(8,2),
-	FOREIGN KEY(product_id)		REFERENCES product,
-	FOREIGN KEY(consumer_id)	REFERENCES consumer_account
+	campaign_id  	INTEGER        	NOT NULL,
+	consumer_id 	INTEGER         NOT NULL,
+	amount      	numeric(8,2),
+	FOREIGN KEY(campaign_id)		REFERENCES campaign(campaign_id),
+	FOREIGN KEY(consumer_id)		REFERENCES consumer_account
 );
