@@ -130,7 +130,7 @@ def all_projects():
 
 @app.route('/edit_project')
 def projectForm():
-	return render_template("addproject.html", projects = tempvariables.all_projects)
+	return render_template("add_project.html", projects = tempvariables.all_projects)
 							
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required
