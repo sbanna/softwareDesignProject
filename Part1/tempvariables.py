@@ -9,14 +9,7 @@ campaign = {'title': 'The Campaign',
 			'percentFunded': 50,
 			};
 
-# information needed when viewing all active projects
-listofProjects = [
-			{'title': 'campaign1', 'author': 'author1', 'image':'image1', 'description': 'description1', 'currentPrice':'10', 'nextPrice':'20', 'commitsAttained':'12', 'commitsNeedNextPrice':'20'},
-			{'title': 'campaign2', 'author': 'author2', 'image':'image2', 'description': 'description2', 'currentPrice':'141', 'nextPrice':'150', 'commitsAttained':'16', 'commitsNeedNextPrice':'50'},
-			];
-
-#
-
+# data relating all projects in the database
 allprojects = [
 		{
 			'image':'theUrl', 

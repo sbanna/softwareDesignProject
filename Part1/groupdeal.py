@@ -120,13 +120,17 @@ def show_product():
 							amountContributers = 10,
 							amountContriNeeded = 15,)
 	
-@app.route('/allprojects')
+@app.route('/add_project')
+def add_project():
+	return render_template("add_project.html");
+	
+@app.route('/all_projects')
 def allProjects():
-	return render_template("allprojects.html", projects = tempvariables.allprojects)
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
-@app.route('/editProject')
+@app.route('/edit_project')
 def projectForm():
-	return render_template("addproject.html", projects = tempvariables.allprojects)
+	return render_template("addproject.html", projects = tempvariables.all_projects)
 							
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required
