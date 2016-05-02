@@ -123,6 +123,10 @@ def show_product():
 @app.route('/add_project')
 def add_project():
 	return render_template("add_project.html")
+
+@app.route('/campaign')
+def campaign():
+	return render_template("project.html")
 	
 @app.route('/all_projects')
 def all_projects():
