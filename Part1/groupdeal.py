@@ -39,11 +39,12 @@ def all_projects():
 	if not session['logged_in']:
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 	else:
-		user_campaigns_qs = g.db.execute('select campaign_name ')
-		projects = []
-		for p in tempvariables.all_projects:
-			if p['']:
-				print ""
+		#user_campaigns_qs = g.db.execute('select campaign_name ')
+		#projects = []
+		#for p in tempvariables.all_projects:
+	#		if p['']:
+	#			print ""
+		return render_template("all_projects.html", projects = tempvariables.all_projects)
 
 # VENDOR PAGE
 # GETS ALL CAMPAIGNS BY vender_name
@@ -70,14 +71,19 @@ def register():
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
 	# Rob do something with these variables
-	if (g.db.execute('select username from user_account where username=?', [theusername])):
-		flash('This username is already in use.')
-	else:
+	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
+	rows = account_exists.fetchall()
+	exists = 0;
+	for i in rows:
+		if i[0] == theusername:
+			print "username already exists"
+			exists = 1
+	if exists == 0:
 		g.db.execute('INSERT INTO user_account (username, password, address) \
 					 values (?, ?, ?)',
-					 [request.form['username'], 
-					  request.form['password'], 
-					  request.form['address']])
+					 [theusername, 
+					  thepassword, 
+					  '1234 Smith Street'])
 		#if (request.form['type'] == 'consumer'):
 		#	g.db.execute('INSERT INTO consumer_account (username) values (?)',
 		#				 [request.form['username']])
@@ -85,19 +91,22 @@ def register():
 		#	g.db.execute('INSERT INTO vendor_account (username) values (?, ?)',
 		#				 [request.form['username']])
 		g.db.commit()
-	session['logged_in'] = True
-	theName = theusername
+		session['logged_in'] = True
+		theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
 	global theName
-	
+	print "yes"
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
 	# Rob do something with these variables
-	print(theusername)
-	print(thepassword)
+	account_exists = g.db.execute('select username from user_account where username=? and password=?', 
+								  [theusername, thepassword])
+	rows = account_exists.fetchall()
+	exists = 0;
+	print rows
 
 	# if things work set the below variable accordingly
 	session['logged_in'] = True
