@@ -39,11 +39,12 @@ def all_projects():
 	if not session['logged_in']:
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 	else:
-		#user_campaigns_qs = g.db.execute('select campaign_name ')
-		#projects = []
-		#for p in tempvariables.all_projects:
-	#		if p['']:
-	#			print ""
+		# this isn't done I need a contributions page and vender/customer func
+		user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
+		projects = []
+		for p in tempvariables.all_projects:
+			if p['']:
+				print ""
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 
 # VENDOR PAGE
@@ -70,7 +71,7 @@ def register():
 	
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
-	# Rob do something with these variables
+
 	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
 	rows = account_exists.fetchall()
 	exists = 0;
@@ -98,26 +99,28 @@ def register():
 @app.route('/login', methods=['GET','POST'])
 def login():
 	global theName
-	print "yes"
+	
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
-	# Rob do something with these variables
+
 	account_exists = g.db.execute('select username from user_account where username=? and password=?', 
 								  [theusername, thepassword])
 	rows = account_exists.fetchall()
-	exists = 0;
-	print rows
+	if rows == []:
+		exists = 0
+	else:
+		exists = 1
 
 	# if things work set the below variable accordingly
-	session['logged_in'] = True
-	theName = theusername
+	if exists:
+		session['logged_in'] = True
+		theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/logout')
 def logout():
 	global theName
-	#global logged_in
-	#session.pop('logged_in', None)
+
 	session['logged_in'] = False
 	theName = ""
 	return redirect(url_for('all_projects'))

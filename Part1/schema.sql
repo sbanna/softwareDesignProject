@@ -56,9 +56,9 @@ CREATE TABLE payment_info
 
 CREATE TABLE contributions
 (
-	campaign_id  	INTEGER        	NOT NULL,
-	consumer_id 	INTEGER         NOT NULL,
+	campaign_name  	INTEGER        	NOT NULL,
+	consumer_name 	INTEGER         NOT NULL,
 	amount      	numeric(8,2),
-	FOREIGN KEY(campaign_id)		REFERENCES campaign(campaign_id),
-	FOREIGN KEY(consumer_id)		REFERENCES consumer_account
+	FOREIGN KEY(campaign_name)		REFERENCES campaign(campaign_name),
+	FOREIGN KEY(consumer_name)		REFERENCES user_account(username)
 );
