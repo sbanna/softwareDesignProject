@@ -186,35 +186,24 @@ def add_product():
 	flash("New product was added successfully")
 	return render_template("add_project.html")
 	
-@app.route('/choose_product')
-def choose_product():
-	return render_template("choose_product.html")
-	
-@app.route('/show_product', methods = ['GET', 'POST'])
-def show_product():
-	product_qs = g.db.execute('SELECT product_id, price, image, description, vendor_id \
-							   FROM product WHERE product_id = ?', 
-							   [request.form['product_id']])
-	product_info = []
-	for i in product_qs:
-		for j in i:
-			product_info.append(j)
-	return render_template("simpleCampaign.html",
-							title = "GroupDeal Hoodie",
-							description = product_info[3],
-							currentPrice = product_info[1],
-							nextPrice = "$40.00",
-							amountContributers = 10,
-							amountContriNeeded = 15,)
-
-@app.route('/campaign')
+@app.route('/campaign', methods=['GET'])
 def campaign():
-	return render_template("project.html", project = tempvariables.campaign)
+	campaign_name = request.args.get('name')
+	vendor_name = request.args.get('vendor')
+	curr_campaign = ""
+	for i in tempvariables.all_projects:
+		if i['title'] == campaign_name and i['author'] == vendor_name:
+			curr_campaign = i
+	return render_template("project.html", campaign = curr_campaign)
 	
 @app.route('/edit_project')
 def projectForm():
 	return render_template("add_project.html", projects = tempvariables.all_projects)
-							
+
+@app.route('/choose_product')
+def choose_product():
+	return render_template("choose_product.html")
+	
 @app.route('/pledge', methods = ['GET', 'POST'])
 @login_required
 def add_pledge():
