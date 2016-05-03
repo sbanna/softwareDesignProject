@@ -38,6 +38,12 @@ app.config.from_object(__name__)
 def all_projects():
 	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
+# MY VENDOR PAGE
+# GETS ALL CAMPAIGNS MADE BY ME
+@app.route('/vendor/me', methods = ['GET', 'POST'])
+def my_campaigns():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
 # VENDOR PAGE
 # GETS ALL CAMPAIGNS BY vender_name
 @app.route('/vendor/<string:vendor_name>', methods = ['GET', 'POST'])

@@ -55,10 +55,12 @@
                     <nav class="top-menu">
                         <ul id="main-menu" class="nav nav-horizontal clearfix">
                             <li class="active"><a href="index.html">Home</a></li>
-                            <li class="sep"></li>
-                            <li><a href="all-pages.html">My Pledges</a></li>
-                            <li class="sep"></li>
-                            <li><a href="how-it-work.html">My Campaigns</a></li>
+                            {% if session.logged_in %}
+                                <li class="sep"></li>
+                                <li><a href="all-pages.html">My Pledges</a></li>
+                                <li class="sep"></li>
+                                <li><a href="how-it-work.html">My Campaigns</a></li>
+                            {% endif %}
                         </ul>
                         <a id="btn-toogle-menu" class="btn-toogle-menu" href="#alternate-menu">
                             <span class="line-bar"></span>
@@ -67,9 +69,11 @@
                         </a>
                         <div id="right-menu">
                             <ul class="alternate-menu">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="all-pages.html">My Pledges</a></li>
-                                <li><a href="how-it-work.html">My Campaigns</a></li>
+                                <li><a href="{{ url_for('all_projects') }}">Home</a></li>
+                                {% if session.logged_in %}
+                                    <li><a href="{{ url_for('my_pledges') }}">My Pledges</a></li>
+                                    <li><a href="{{ url_for('my_campaigns') }}">My Campaigns</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </nav>
@@ -100,18 +104,20 @@
                 </div>
                 <div class="header-left">
                     <h1 id="logo">
-                        <a href="index.html"><img style="max-height:50px" src="/static/images/quicklogo.png" alt="$SITE_NAME"/></a>
+                        <a href="{{ url_for('all_projects') }}"><img style="max-height:50px" src="/static/images/quicklogo.png" alt="$SITE_NAME"/></a>
                     </h1>
                     <div class="main-nav clearfix">
                         <div class="nav-item">
                             <a href="#" class="nav-title">Discover</a>
                             <p class="rs nav-description">Great Projects</p>
                         </div>
-                        <span class="sep"></span>
-                        <div class="nav-item">
-                            <a href="#" class="nav-title">Create</a>
-                            <p class="rs nav-description">Your Project</p>
-                        </div>
+                        {% if session.logged_in %}
+                            <span class="sep"></span>
+                            <div class="nav-item">
+                                <a href="{{ url_for('add_campaign') }}" class="nav-title">Create</a>
+                                <p class="rs nav-description">Your Project</p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
