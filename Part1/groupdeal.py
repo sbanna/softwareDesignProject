@@ -47,6 +47,12 @@ def all_projects():
 				print ""
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 
+# MY VENDOR PAGE
+# GETS ALL CAMPAIGNS MADE BY ME
+@app.route('/vendor/me', methods = ['GET', 'POST'])
+def my_campaigns():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+
 # VENDOR PAGE
 # GETS ALL CAMPAIGNS BY vender_name
 @app.route('/vendor/<string:vendor_name>', methods = ['GET', 'POST'])
@@ -68,9 +74,10 @@ def add_campaign():
 @app.route('/register', methods=['GET','POST'])
 def register():
 	global theName
-	
+
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
+	checkmark = request.form.get('boolVendor') ## this will either be 'vendor' or 'customer'
 
 	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
 	rows = account_exists.fetchall()
