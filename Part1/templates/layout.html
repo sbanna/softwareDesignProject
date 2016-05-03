@@ -85,8 +85,8 @@
                 <div id="sys_header_right" class="header-right">
                     {% if not session.logged_in %}
                         <div class="account-panel">
-                        <a href="#" class="btn btn-red sys_show_popup_login">Register</a>
-                        <a href="#" class="btn btn-black sys_show_popup_login">Login</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-red sys_show_popup_login">Register</a>
+                        <a href="{{ url_for('login') }}" class="btn btn-black sys_show_popup_login">Login</a>
                     </div>
                     {% else %}
                         <a href="{{ url_for('logout') }}" class="btn btn-black">Logout</a>
@@ -174,7 +174,7 @@
             </div>
             <div class="grid_4">
                 <div class="form login-form">
-                    <form action=""{{ url_for('login') }}"">
+                    <form action="{{ url_for('login') }}">
                         <h3 class="rs title-form">Login</h3>
                         <div class="box-white">
                             <h4 class="rs title-box">Already Have an Account?</h4>
@@ -184,7 +184,7 @@
                                     <input name="username" id="txt_email_login" class="txt fill-width" type="text" placeholder="username"/>
                                 </label>
                                 <label for="txt_password_login">
-                                    <input name="name" id="txt_password_login" class="txt fill-width" type="password" placeholder="Enter password"/>
+                                    <input name="password" id="txt_password_login" class="txt fill-width" type="password" placeholder="Enter password"/>
                                 </label>
 
                                 <p class="rs ta-c pb10">
