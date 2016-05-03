@@ -46,6 +46,7 @@ def vendor_campaigns(vendor_name):
 def my_pledges():
 	return render_template("all_projects.html", projects = tempvariables.all_projects)
 
+# ADD A NEW PRODUCT
 @app.route('/add_campaign')
 def add_campaign():
 	return render_template("add_project.html")
