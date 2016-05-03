@@ -40,12 +40,21 @@ def all_projects():
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 	else:
 		# this isn't done I need a contributions page and vender/customer func
-		user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
-		projects = []
+		#user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
+		#projects = []
+		#for p in tempvariables.all_projects:
+		#	if p['']:
+		#		print ""
+		is_vendor = False
+		campaigns = []
+		cust_or_vend = g.db.execute('SELECT username FROM vendor_account WHERE username=?', [theName])
+		rows = cust_or_vend.fetchall()
+		if rows != []:
+			is_vendor = True
 		for p in tempvariables.all_projects:
-			if p['']:
-				print ""
-		return render_template("all_projects.html", projects = tempvariables.all_projects)
+			if p['author'] == theName:
+				campaigns.append(p)
+		return render_template("all_projects.html", projects = campaigns)
 
 # MY VENDOR PAGE
 # GETS ALL CAMPAIGNS MADE BY ME
@@ -77,7 +86,7 @@ def register():
 
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
-	checkmark = request.form.get('boolVendor') ## this will either be 'vendor' or 'customer'
+	checkmark = request.form.get('boolVendor') # this will either be 'vendor' or 'customer'
 
 	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
 	rows = account_exists.fetchall()
@@ -92,12 +101,12 @@ def register():
 					 [theusername, 
 					  thepassword, 
 					  '1234 Smith Street'])
-		#if (request.form['type'] == 'consumer'):
-		#	g.db.execute('INSERT INTO consumer_account (username) values (?)',
-		#				 [request.form['username']])
-		#else:
-		#	g.db.execute('INSERT INTO vendor_account (username) values (?, ?)',
-		#				 [request.form['username']])
+		if (checkmark == 'customer'):
+			g.db.execute('INSERT INTO consumer_account (username) values (?)',
+						 [theusername])
+		else:
+			g.db.execute('INSERT INTO vendor_account (username) values (?)',
+						 [theusername])
 		g.db.commit()
 		session['logged_in'] = True
 		theName = theusername
