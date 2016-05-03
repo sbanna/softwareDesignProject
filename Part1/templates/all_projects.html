@@ -21,13 +21,13 @@
                                 <div class="project-short sml-thumb">
                                     <div class="top-project-info">
                                         <div class="content-info-short clearfix">
-                                            <a href="#" class="thumb-img">
+                                            <a href="{{ url_for('campaign', name=project.title, vendor=project.author) }}" class="thumb-img">
                                                 <!-- <img src="images/ex/th-292x204-1.jpg" alt="$TITLE"> -->
                                                 <img src='{{project.image}}' alt="$TITLE">
 
                                             </a>
                                             <div class="wrap-short-detail">
-                                                <h3 class="rs acticle-title"><a class="be-fc-orange" href="#">{{project.title}}</a></h3>
+                                                <h3 class="rs acticle-title"><a class="be-fc-orange" href="">{{project.title}}</a></h3>
                                                 <p class="rs tiny-desc">by <a href="#" class="fw-b fc-gray be-fc-orange">{{project.author}}</a></p>
                                                 <p class="rs title-description">{{project.shortDescription}}</p>
                                             </div>
