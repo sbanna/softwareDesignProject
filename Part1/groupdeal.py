@@ -155,10 +155,10 @@ def add_product():
 	
 	#get the id of the campaign we just created
 	campaign_qs = g.db.execute('SELECT campaign_id FROM campaign ORDER BY campaign_id DESC LIMIT 1')
+	campaign = ""
 	for i in campaign_qs:
 		for j in i:
 			campaign = j
-	print campaign
 	
 	#this doesn't work.  dunno why
 	if (request.form['price_2']):
@@ -180,6 +180,8 @@ def add_product():
 	if (request.form['price_6']):
 		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
 					 (campaign, "500", request.form['price_6']))
+	
+	g.db.commit()
 	
 	flash("New product was added successfully")
 	return render_template("add_project.html")
