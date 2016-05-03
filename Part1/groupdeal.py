@@ -143,14 +143,14 @@ def add_product():
 				   request.form['vendor_name']))
 	g.db.commit()
 	
-	'''write_to_file(request.form['campaign_name'],
+	write_to_file(request.form['campaign_name'],
 				   request.form['price_1'], 
 				   request.form['image'], 
 				   request.form['descr'], 
 				   request.form['descr_simple'], 
 				   0, 
 				   request.form['vendor_name'],
-				   request.form['price_2'])'''
+				   request.form['price_2'])
 	
 	#get the id of the campaign we just created
 	campaign_qs = g.db.execute('SELECT campaign_id FROM campaign ORDER BY campaign_id DESC LIMIT 1')
