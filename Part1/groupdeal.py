@@ -51,6 +51,10 @@ def my_pledges():
 def add_campaign():
 	return render_template("add_project.html")
 
+@app.route('/campaign')
+def campaign():
+	return render_template("project.html",project = tempvariables.campaign)
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -140,10 +144,6 @@ def show_product():
 							nextPrice = "$40.00",
 							amountContributers = 10,
 							amountContriNeeded = 15,)
-
-@app.route('/campaign')
-def campaign():
-	return render_template("project.html")
 	
 
 
@@ -183,6 +183,115 @@ def teardown_request(exception):
 	db = getattr(g, 'db', None)
 	if db is not None:
 		db.close()
+
+
+
+
+
+
+
+
+
+#This is the login page
+@app.route('/mylogin', methods = ['post','get'])
+def login_page():
+  global users
+  #check to see if the users dictionary is empty, if it is read it in from the file
+  if not bool(users): # if its empty, read it in from the file
+    print "Reading in from the file"
+    readUsers(users)
+
+  # ck if the user is in the session
+  if 'userName' in session:
+    return redirect(url_for('homePage')) # simply just redirect to the homepage of the user
+  # If the user sends back a request( either log in or create a new account)
+  if request.method == 'POST':
+    # ck which type of response it was
+    if request.form["submit"] == "Sign In": # user is trying to log into his/her account
+      print request.form["user_name"] #print to the console for debugging purposes
+      userName = request.form["user_name"]
+      password = (request.form["password"])
+      # ck the credentials
+      if checkCredentials(userName,password): #verification was a success
+        # add it to the session, meaning we cache that the user is logged in. 
+        # The user won't have to log back in
+        session['userName'] = userName # basically a dictionary
+        return redirect(url_for("homePage"))
+      else:
+        print "failed"
+        return render_template("login.html", responsetext="You entered a invalid username/password")
+
+
+    elif request.form["submit"] == "create_account":
+      return redirect(url_for("create"))  # redirect to the users page
+  return render_template("login.html")
+
+
+# This is the create page
+# Redirects here from the index page (AKA login page)
+@app.route('/create/', methods = ['post', 'get'])
+def create():
+  global users
+  if request.method == 'POST':
+    #now get the name/username & password to create the account
+    name = request.form['name'] # get the name
+    userName = request.form['user_name'] # get User name
+    password = request.form['password'] # get pass
+    # check to see if this user_name exists because they must be unique!
+    if users.has_key(userName):
+      print "error key already exists"
+      return render_template("create.html", responsetext = "User Name already taken :(")
+    else:
+      print "Key successfully created! "
+      writeKey(users,name,userName,password) # write the key to the dictionary and to the file
+      session['userName'] = userName
+      # listStuff.insert(0,"")
+      # followFriend("") 
+      return redirect(url_for("login_page"))
+
+  return render_template("create.html")
+
+
+users = {} # this holds all the users Stored as {userid, {username,password}}
+
+#Verify whether the user entered the user_id and password correctly
+def checkCredentials(userName,typedPass):
+  global users 
+  if users.has_key(userName):
+    (name,userPass) = users[userName]
+    return (typedPass == userPass)
+  else:
+    return False
+
+# read the users from the file
+def readUsers(users):
+  # so read the file and store all the users in the dictionary
+  file = open("users.txt","r") #open file for only reading
+  for line in file:
+    string  = line.split(':') # split the line based on colon (:). (name userId )
+    i = 0
+    while i < len(string): #loop through the file and read in the users
+      name = string[i]
+      i+=1
+      user_name = string[i]
+      i+= 1
+      password = string[i].strip("\n")
+      i+=1
+      users[user_name] = (name,password)
+  print (users)
+  file.close()
+
+#When we successfully create a user, insert into the dictionary and write to the file
+def writeKey(users,name,userName,password):
+  users[userName] = (name,password) #insert into the dictionary
+  file = open("users.txt","a") #write to the file
+  line = name + ":"+userName+":"+password+"\n"
+  file.write(line)
+  file.close()
+  # also make a blank entry for the user tweets and friend list
+  userTweets[userName] = []
+  userFriends[userName] = []
 	
 if __name__ == '__main__':
-	app.run()
+	app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT' # this is the key used for the session
+  	app.run("127.0.0.1",5000,debug = True)
