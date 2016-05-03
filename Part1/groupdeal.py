@@ -18,6 +18,9 @@ SECRET_KEY = 'development_key'
 USERNAME = 'admin'
 PASSWORD = 'default'
 
+logged_in = False;
+theName = "";
+
 # login_required decorator (limits use of some functions to logged in users only)
 def login_required(f):
     @wraps(f)
@@ -53,26 +56,60 @@ def add_campaign():
 	return render_template("add_project.html")
 
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
+@app.route('/register', methods=['GET','POST'])
+def register():
+	global theName;
 	
+	theusername = request.args.get('username');
+	thename = request.args.get('name');
+	thepassword = request.args.get('password');
+	# Rob do something with these variables
+	print(theusername)
+	print(thename)
+	print(thepassword)
+	session['logged_in'] = True;
+	theName = thename;
+	return redirect(url_for('all_projects'))
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+	global theName;
+	
+	theusername = request.args.get('username');
+	thepassword = request.args.get('password');
+	# Rob do something with these variables
+	print(theusername)
+	print(thepassword)
+
+	# if things work set the below variable accordingly
+	session['logged_in'] = True;
+	theName = thename;
+	return redirect(url_for('all_projects'))
+
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
+	global theName;
+	global logged_in;
+	session.pop('logged_in', None);
+	theName = "";
+	return redirect(url_for('all_projects'))
+
+
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         if request.form['username'] != app.config['USERNAME']:
+#             error = 'Invalid username'
+#         elif request.form['password'] != app.config['PASSWORD']:
+#             error = 'Invalid password'
+#         else:
+#             session['logged_in'] = True
+#             flash('You were logged in')
+#             return redirect(url_for('show_entries'))
+#     return render_template('login.html', error=error)
+	
+
 
 @app.route('/vendor_home')
 @login_required
@@ -296,46 +333,6 @@ def create():
 
   return render_template("create.html")
 
-
-users = {} # this holds all the users Stored as {userid, {username,password}}
-
-#Verify whether the user entered the user_id and password correctly
-def checkCredentials(userName,typedPass):
-  global users 
-  if users.has_key(userName):
-    (name,userPass) = users[userName]
-    return (typedPass == userPass)
-  else:
-    return False
-
-# read the users from the file
-def readUsers(users):
-  # so read the file and store all the users in the dictionary
-  file = open("users.txt","r") #open file for only reading
-  for line in file:
-    string  = line.split(':') # split the line based on colon (:). (name userId )
-    i = 0
-    while i < len(string): #loop through the file and read in the users
-      name = string[i]
-      i+=1
-      user_name = string[i]
-      i+= 1
-      password = string[i].strip("\n")
-      i+=1
-      users[user_name] = (name,password)
-  print (users)
-  file.close()
-
-#When we successfully create a user, insert into the dictionary and write to the file
-def writeKey(users,name,userName,password):
-  users[userName] = (name,password) #insert into the dictionary
-  file = open("users.txt","a") #write to the file
-  line = name + ":"+userName+":"+password+"\n"
-  file.write(line)
-  file.close()
-  # also make a blank entry for the user tweets and friend list
-  userTweets[userName] = []
-  userFriends[userName] = []
 	
 if __name__ == '__main__':
 	app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT' # this is the key used for the session
