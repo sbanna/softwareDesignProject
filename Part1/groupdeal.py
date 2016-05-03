@@ -2,6 +2,7 @@
 import sqlite3
 import os
 import tempvariables
+import fileinput
 from contextlib import closing
 from functools import wraps
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
@@ -106,19 +107,82 @@ def add_user():
 #@login_required
 def create_product():
 	return render_template("create_product.html")
+	
+def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vendor, price_2 = 'n/a'):
+	dict = "\t\t{\r\t\t\t'image':'%s',\
+			\r\t\t\t'title':'%s',\
+			\r\t\t\t'author':'%s',\
+			\r\t\t\t'shortDescription':'%s',\
+			\r\t\t\t'currentPrice':%s,\
+			\r\t\t\t'amountCommitted':%s,\
+			\r\t\t\t'daysLeft':99,\
+			\r\t\t\t'nextPrice':%s,\
+			\r\t\t\t'nextCommitAmount':99,\
+			\r\t\t\t'percentCommitted':99,\
+			\r\t\t},\r" % (image_str,name,vendor,descr_simple,price,num_pledges, price_2)
+	file = open('Part1/tempvariables.py', 'r+')
+	contents = file.readlines()
+	file.close()
+	
+	contents.insert(13, dict)
+	
+	file = open('Part1/tempvariables.py', 'w')
+	contents = "".join(contents)
+	file.write(contents)
+	file.close();
 
 @app.route('/add_product', methods = ['POST']) 
 def add_product():
-	g.db.execute('INSERT INTO product (product_name, price, image, description, vendor_id) \
-				  values (?, ?, ?, ?, ?)',
-				  (request.form['product_name'],
-				   request.form['price'], 
+	g.db.execute('INSERT INTO campaign (campaign_name, price, image, descr, descr_simple, num_pledges, vendor_name) \
+				  values (?, ?, ?, ?, ?, ?, ?)',
+				  (request.form['campaign_name'],
+				   request.form['price_1'], 
 				   request.form['image'], 
-				   request.form['description'], 
-				   request.form['vendor_id']))
+				   request.form['descr'], 
+				   request.form['descr_simple'], 
+				   0, 
+				   request.form['vendor_name']))
 	g.db.commit()
+	
+	write_to_file(request.form['campaign_name'],
+				   request.form['price_1'], 
+				   request.form['image'], 
+				   request.form['descr'], 
+				   request.form['descr_simple'], 
+				   0, 
+				   request.form['vendor_name'],
+				   request.form['price_2'])
+	
+	#get the id of the campaign we just created
+	campaign_qs = g.db.execute('SELECT campaign_id FROM campaign ORDER BY campaign_id DESC LIMIT 1')
+	for i in campaign_qs:
+		for j in i:
+			campaign = j
+	print campaign
+	
+	#this doesn't work.  dunno why
+	if (request.form['price_2']):
+		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
+					 (campaign, "100", request.form['price_2']))
+					 
+	if (request.form['price_3']):
+		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
+					 (campaign, "200", request.form['price_3']))
+	
+	if (request.form['price_4']):
+		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
+					 (campaign, "300", request.form['price_4']))
+					 
+	if (request.form['price_5']):
+		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
+					 (campaign, "400", request.form['price_5']))
+	
+	if (request.form['price_6']):
+		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
+					 (campaign, "500", request.form['price_6']))
+	
 	flash("New product was added successfully")
-	return render_template("create_product.html")
+	return render_template("add_project.html")
 	
 @app.route('/choose_product')
 def choose_product():
@@ -145,8 +209,6 @@ def show_product():
 def campaign():
 	return render_template("project.html")
 	
-
-
 @app.route('/edit_project')
 def projectForm():
 	return render_template("add_project.html", projects = tempvariables.all_projects)
@@ -164,7 +226,7 @@ def add_pledge():
 @login_required
 def consumer_home():
 	return render_template('consumer_home.html')
-
+	
 def connect_db():
 	return sqlite3.connect(app.config['DATABASE'])
 	

@@ -9,64 +9,64 @@
                     <h2 class="common-title">Add A Product</h2>
                     <div class="box-white">
                         <form id="contact-form" class="clearfix" action="{{ url_for('add_product') }}" method="POST">
-                             <p class="rs pb30">Pellentesque laoreet sapien id lacus luctus non fringilla elit lobortis. Fusce augue diam, tempor posuere pharetra sed, feugiat non sapien.</p>
-                            <div class="form form-post-comment">
-                                 <div class="input"> 
-                                    <label for="txt_name_contact">
-                                        <input id="txt_name_contact" type="text" name="product_name" class="txt fill-width txt-name" placeholder="Title Of Campaign"/>
-                                    </label>
-                                    <label for="txt_name_contact">
-                                        <input id="txt_name_contact" type="text" name="vendor_name" class="txt fill-width txt-name" placeholder="Vendor Name"/>
-                                    </label>
+                            <p class="rs pb30">Pellentesque laoreet sapien id lacus luctus non fringilla elit lobortis. Fusce augue diam, tempor posuere pharetra sed, feugiat non sapien.</p>
+							<div class="form form-post-comment">
+								<div class="input"> 
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="campaign_name" class="txt fill-width txt-name" placeholder="Title Of Campaign"/>
+									</label>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="vendor_name" class="txt fill-width txt-name" placeholder="Vendor Name"/>
+									</label>
         
-                                    <label for="txt_name_contact">
-                                        <input id="txt_name_contact" type="text" name="image" class="txt fill-width txt-name" placeholder="Image Url"/>
-                                    </label>
-                                    <label for="txt_name_contact">
-                                        <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="100 character Description"/>
-                                    </label>
-                                    <label for="txt_content_contact">
-                                        <textarea name="description" id="txt_content_contact" cols="30" rows="10" class="txt fill-width" font-family="Courier"placeholder="HTML DESCRIPTION"></textarea>
-                                    </label>
-                                    <div class="layout-3cols">
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 1"/> 
-                                            </label>
-                                        </div>
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 2"/> 
-                                            </label>
-                                        </div>
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 3"/> 
-                                            </label>
-                                        </div>
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 4"/> 
-                                            </label>
-                                        </div>
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 5"/> 
-                                            </label>
-                                        </div>
-                                        <div class="content grid_4">
-                                            <label for="txt_name_contact">
-                                                <input id="txt_name_contact" type="text" name="simple_description" class="txt fill-width txt-name" placeholder="Price 6"/> 
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                                <p class="rs ta-r clearfix">
-                                    <span id="response"></span>
-                                   
-                                   <input type="submit" class="btn btn-white btn-submit-comment" name="submit" value="Create">
-                               </p>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="image" class="txt fill-width txt-name" placeholder="Image Url"/>
+									</label>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="descr_simple" class="txt fill-width txt-name" placeholder="100 character Description"/>
+									</label>
+									<label for="txt_content_contact">
+										<textarea name="descr" id="txt_content_contact" cols="30" rows="10" class="txt fill-width" font-family="Courier"placeholder="HTML DESCRIPTION"></textarea>
+									</label>
+									<div class="layout-3cols">
+										<div class="content grid_4">
+											<label for="txt_name_contact">													
+												<input id="txt_name_contact" type="text" name="price_1" class="txt fill-width txt-name" placeholder="Price 1"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">
+												<input id="txt_name_contact" type="text" name="price_2" class="txt fill-width txt-name" placeholder="Price 2"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">
+												<input id="txt_name_contact" type="text" name="price_3" class="txt fill-width txt-name" placeholder="Price 3"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">
+												<input id="txt_name_contact" type="text" name="price_4" class="txt fill-width txt-name" placeholder="Price 4"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">
+												<input id="txt_name_contact" type="text" name="price_5" class="txt fill-width txt-name" placeholder="Price 5"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">
+												<input id="txt_name_contact" type="text" name="price_6" class="txt fill-width txt-name" placeholder="Price 6"/> 
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<p class="rs ta-r clearfix">
+									<span id="response"></span>
+                                  
+									<input type="submit" class="btn btn-white btn-submit-comment" name="submit" value="Create">
+								</p>
                             </div>
                         </form>
                     </div>

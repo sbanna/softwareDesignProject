@@ -11,7 +11,7 @@ campaign = {'title': 'The Campaign',
 
 # data relating all projects in the database
 all_projects = [
-		{
+		{			'image':'http://i.imgur.com/no3t9ib.gif',						'title':'Rick',						'author':'Rob',						'shortDescription':'Roll',						'currentPrice':50,						'amountCommitted':0,						'daysLeft':99,						'nextPrice':45,						'nextCommitAmount':99,						'percentCommitted':99,					},		{
 			'image':'http://lorempixel.com/400/300/', 
 			'title':'campaignTitle1', 
 			'author': 'Saqib Banna',
