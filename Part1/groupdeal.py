@@ -69,10 +69,12 @@ def register():
 	theusername = request.args.get('username');
 	thename = request.args.get('name');
 	thepassword = request.args.get('password');
+	checkmark = request.form.get('boolVendor')
+
 	# Rob do something with these variables
 	print(theusername)
 	print(thename)
-	print(thepassword)
+	print(checkmark) ## this will either be 'vendor' or 'customer'
 	session['logged_in'] = True;
 	theName = thename;
 	return redirect(url_for('all_projects'))
