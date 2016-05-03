@@ -8,7 +8,7 @@ CREATE TABLE user_account
 
 CREATE TABLE vendor
 (
-	vendor_name varchar(255) 	NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
+	vendor_name varchar(255) 	NOT NULL 	PRIMARY KEY
 );
 
 CREATE TABLE campaign
@@ -26,11 +26,11 @@ CREATE TABLE campaign
 
 CREATE TABLE price_points
 (
-	campaign_id 	INTEGER			NOT NULL 	PRIMARY KEY,
+	campaign_id 	INTEGER			NOT NULL,
 	pledge_num		INTEGER			NOT NULL,
 	new_price		numeric(8,2)	NOT NULL,
 	FOREIGN KEY(campaign_id)		REFERENCES 	campaign(campaign_id)
-)
+);
 
 CREATE TABLE vendor_account
 (
@@ -52,7 +52,7 @@ CREATE TABLE payment_info
 	card_num	BIGINT			NOT NULL,
 	security	INTEGER,
 	FOREIGN KEY(consumer_id)	REFERENCES	consumer_account(consumder_id)
-)
+);
 
 CREATE TABLE contributions
 (
