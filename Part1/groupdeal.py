@@ -18,8 +18,8 @@ SECRET_KEY = 'development_key'
 USERNAME = 'admin'
 PASSWORD = 'default'
 
-logged_in = False;
-theName = "";
+logged_in = False
+theName = ""
 
 # login_required decorator (limits use of some functions to logged in users only)
 def login_required(f):
@@ -34,9 +34,16 @@ app.config.from_object(__name__)
 
 # THIS IS THE HOME PAGE
 # GETS ALL CAMPAIGNS, STORES IN projects VARIABLE 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def all_projects():
-	return render_template("all_projects.html", projects = tempvariables.all_projects)
+	if not session['logged_in']:
+		return render_template("all_projects.html", projects = tempvariables.all_projects)
+	else:
+		user_campaigns_qs = g.db.execute('select campaign_name ')
+		projects = []
+		for p in tempvariables.all_projects:
+			if p['']:
+				print ""
 
 # VENDOR PAGE
 # GETS ALL CAMPAIGNS BY vender_name
@@ -58,40 +65,52 @@ def add_campaign():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-	global theName;
+	global theName
 	
-	theusername = request.args.get('username');
-	thename = request.args.get('name');
-	thepassword = request.args.get('password');
+	theusername = request.args.get('username')
+	thepassword = request.args.get('password')
 	# Rob do something with these variables
-	print(theusername)
-	print(thename)
-	print(thepassword)
-	session['logged_in'] = True;
-	theName = thename;
+	if (g.db.execute('select username from user_account where username=?', [theusername])):
+		flash('This username is already in use.')
+	else:
+		g.db.execute('INSERT INTO user_account (username, password, address) \
+					 values (?, ?, ?)',
+					 [request.form['username'], 
+					  request.form['password'], 
+					  request.form['address']])
+		#if (request.form['type'] == 'consumer'):
+		#	g.db.execute('INSERT INTO consumer_account (username) values (?)',
+		#				 [request.form['username']])
+		#else:
+		#	g.db.execute('INSERT INTO vendor_account (username) values (?, ?)',
+		#				 [request.form['username']])
+		g.db.commit()
+	session['logged_in'] = True
+	theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-	global theName;
+	global theName
 	
-	theusername = request.args.get('username');
-	thepassword = request.args.get('password');
+	theusername = request.args.get('username')
+	thepassword = request.args.get('password')
 	# Rob do something with these variables
 	print(theusername)
 	print(thepassword)
 
 	# if things work set the below variable accordingly
-	session['logged_in'] = True;
-	theName = thename;
+	session['logged_in'] = True
+	theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/logout')
 def logout():
-	global theName;
-	global logged_in;
-	session.pop('logged_in', None);
-	theName = "";
+	global theName
+	#global logged_in
+	#session.pop('logged_in', None)
+	session['logged_in'] = False
+	theName = ""
 	return redirect(url_for('all_projects'))
 
 
@@ -166,7 +185,7 @@ def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vend
 	file = open('Part1/tempvariables.py', 'w')
 	contents = "".join(contents)
 	file.write(contents)
-	file.close();
+	file.close()
 
 @app.route('/add_product', methods = ['POST']) 
 def add_product():
