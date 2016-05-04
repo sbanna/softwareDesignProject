@@ -97,29 +97,47 @@ def add_campaign():
 	else:
 		return redirect(url_for('all_projects'))
 
-# this is the checkout form
-# ex: http://127.0.0.1:5000/checkout?campaign=RobTHISONE&price=32
-# @app.route('/checkout/<string:campaign>/<string:price>',methods=['GET','POST'])
-@app.route('/checkout',methods=['GET','POST'])
-def checkout():
-	campaign = request.args.get('campaign')
-	price = request.args.get('price')
-	return render_template("checkout.html",campaign=campaign,amount=price)
-
 #not complete
 def inc_backers(campaign_name):
-	image = tempvariables.all_projects['image'];
-	title = tempvariables.all_projects['title'];
-	author = tempvariables.all_projects['author'];
-	shortDescription = tempvariables.all_projects['shortDescription'];
-	description = tempvariables.all_projects['description'];
-	currentPrice = tempvariables.all_projects['currentPrice'];
-	amountCommitted = tempvariables.all_projects['amountCommitted'] + 1;
-	nextPrice = tempvariables.all_projects['nextPrice'];
-	nextCommitAmount = tempvariables.all_projects['nextCommitAmount'];
+	file = open('Part1/tempvariables.py', 'r')
+	contents = []
+	
+	line_index = 0
+	for line in file:
+		contents.append(line)
+	
+	file.close()
+	
+	index = 0
+	for c in tempvariables.all_projects:
+		if c['title'] == campaign_name:
+			break;
+		index += 1
+	
+	# first campaign is 13 lines down
+	# each campaign is 15 lines
+	cam_start = 14 + 15*index
+	cam_end = cam_start + 16
+	cam_index = 0;
+	for i in range(len(contents)):
+		if i > cam_start:
+			for j in range(15):
+				contents.remove(contents[i])
+				print contents[i].strip()
+			break;
+
+	image = tempvariables.all_projects[index]['image'];
+	title = tempvariables.all_projects[index]['title'];
+	author = tempvariables.all_projects[index]['author'];
+	shortDescription = tempvariables.all_projects[index]['shortDescription'];
+	description = tempvariables.all_projects[index]['description'];
+	currentPrice = tempvariables.all_projects[index]['currentPrice'];
+	amountCommitted = tempvariables.all_projects[index]['amountCommitted'] + 1;
+	nextPrice = tempvariables.all_projects[index]['nextPrice'];
+	nextCommitAmount = tempvariables.all_projects[index]['nextCommitAmount'];
 	percentCommitted = amountCommitted  * 100 / nextCommitAmount;
-	prices = tempvariables.all_projects['prices'];
-	amount_per_price = tempvariables.all_projects['amount_per_price'];
+	prices = tempvariables.all_projects[index]['prices'];
+	amount_per_price = tempvariables.all_projects[index]['amount_per_price'];
 	dict = "\t\t{\r\t\t\t'image':'%s',\
 			\r\t\t\t'title':'%s',\
 			\r\t\t\t'author':'%s',\
@@ -137,22 +155,24 @@ def inc_backers(campaign_name):
 						   currentPrice,amountCommitted, nextPrice, nextCommitAmount, 
 						   percentCommitted, prices[0], prices[1], 
 						   amount_per_price[0], amount_per_price[1])
-						   
-	file = open('Part1/tempvariables.py', 'r+')
-	contents = file.readlines()
-	file.close()
 	
-	index = 0
-	str = "\t\t\t'image':'%s'," % (image)
-	for c in contents:
-		if c == str:
-			print "yes"
-	contents.insert(13, dict)
+	contents.insert(14, dict)
 	
 	file = open('Part1/tempvariables.py', 'w')
 	contents = "".join(contents)
 	file.write(contents)
 	file.close()
+	
+		
+# this is the checkout form
+# ex: http://127.0.0.1:5000/checkout?campaign=RobTHISONE&price=32
+# @app.route('/checkout/<string:campaign>/<string:price>',methods=['GET','POST'])
+@app.route('/checkout',methods=['GET','POST'])
+def checkout():
+	campaign = request.args.get('campaign')
+	price = request.args.get('price')
+	
+	return render_template("checkout.html",campaign=campaign,amount=price)
 	
 	
 # this is the checkout function
@@ -166,6 +186,8 @@ def checkedout():
 				  VALUES (?, ?, ?)',
 				  (name, campaign, price))
 	g.db.commit()
+	
+	inc_backers(campaign)
 	
 	return redirect(url_for('user_home'))
 

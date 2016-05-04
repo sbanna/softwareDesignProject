@@ -31,7 +31,7 @@
 		                            <div class="sep"></div>
 		                            <div class="fee-item">
 		                                <p class="rs lbl">Next Price Point</p>
-		                                <span class="val">{{campaign.nextPrice}}</span>
+		                                <span class="val">${{campaign.nextPrice}}</span>
 		                            </div>
 									<div class="sep"></div>
 		                            <div class="fee-item">
@@ -54,7 +54,7 @@
 		                            <h3 class="rs alternate-tab accordion-label">About</h3>
 		                            <div class="tab-pane active accordion-content">
 		                                <div class="editor-content">
-		                                    {{campaign.shortDescription|safe}}		                                        
+		                                    {{campaign.description|safe}}		                                        
 		                                </div>
 		                                <!-- REMOVED <div class="project-btn-action"> -->
 		                            </div><!--end: .tab-pane(About) -->
@@ -79,7 +79,7 @@
 		                        <span class="lbl">Buy Now</span>
 		                        <span class="desc">Current Price ${{campaign.currentPrice}}</span>
 		                    </a>
-		                    <p class="rs description">This project will only be funded if at least $15,000 is pledged by Wednesday May 8, 2:05pm EDT.</p>
+		                    <!--<p class="rs description">This project will only be funded if at least $15,000 is pledged by Wednesday May 8, 2:05pm EDT.</p>-->
 		                </div>
 		            </div><!--end: .project-runtime -->
 		            <!-- REMOVED PROJECT AUTHOR -->
