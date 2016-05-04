@@ -84,6 +84,25 @@ def my_pledges():
 def add_campaign():
 	return render_template("add_project.html")
 
+# this is the checkout form
+# ex: http://127.0.0.1:5000/checkout?campaign=RobTHISONE&price=32
+# @app.route('/checkout/<string:campaign>/<string:price>',methods=['GET','POST'])
+@app.route('/checkout',methods=['GET','POST'])
+def checkout():
+	campaign = request.args.get('campaign')
+	price = request.args.get('price')
+	return render_template("checkout.html",campaign=campaign,amount=price)
+
+
+# this is the checkout function
+@app.route('/checkedout', methods = ['POST']) 
+def checkedout():
+	name = request.args.get('name')
+	campaign = request.args.get('campaign')
+	price = request.args.get('price')
+	# do whatever you want with the above
+	return redirect(url_for('all_projects'))
+
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -259,6 +278,8 @@ def add_product():
 	
 	flash("New product was added successfully")
 	return render_template("add_project.html")
+
+
 	
 @app.route('/campaign', methods=['GET'])
 def campaign():

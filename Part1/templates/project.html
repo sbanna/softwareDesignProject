@@ -97,7 +97,7 @@
 		                            <div class="pledge-detail">
 		                                <p class="rs pledge-description">Wish to buy this item at a lower rate? Think it should be ${{price}}. Pledge it! If enough people are interested the price will go down! You will only be charged for this product if we are able to meet this price.</p>
 		                                <p class="rs fw-b pb20">Ocupated (2 of 10)</p>
-		                                <p class="rs ta-c"><a class="btn big btn-red" href="#">Pledge at ${{price}}</a></p>
+		                                <p class="rs ta-c"><a class="btn big btn-red" href="{{ url_for('checkout',campaign={{campaign.title}},price={{price}})}}">Pledge at ${{price}}</a></p>
 		                            </div>
 		                        </div>
 		                    </li><!--end: pledge-item -->
