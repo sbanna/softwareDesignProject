@@ -20,7 +20,7 @@ This repository is for the GroupDeal website. It contains all files necessary fo
   
 ###  TO RUN LOCALLY
 GroupDeal uses Flask, a Python microframework, to run in a virtual environment. To use GroupDeal locally, you can follow these steps:
-(###### 0. Install Python 2.6 or higher)
+###### 0. Install Python 2.6 or higher
 ###### 1. Install virtualenv
 ###### 2. Use virtualenv to create your own environment (most easily done by making a new folder, then placing a *venv* folder in the new folder
 ###### 3. Activate the virtual environment that was just created.
