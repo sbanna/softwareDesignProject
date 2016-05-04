@@ -3,6 +3,7 @@ CREATE TABLE user_account
 	user_id 	INTEGER			NOT NULL 	PRIMARY KEY		AUTOINCREMENT,
 	username 	varchar(255) 	NOT NULL,
 	password 	varchar(255) 	NOT NULL,
+	user_type	varchar(255)	NOT NULL,
 	address		varchar(255)
 );
 

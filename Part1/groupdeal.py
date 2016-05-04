@@ -47,13 +47,18 @@ def all_projects():
 		#		print ""
 		is_vendor = False
 		campaigns = []
-		cust_or_vend = g.db.execute('SELECT username FROM vendor_account WHERE username=?', [theName])
+		cust_or_vend = g.db.execute('SELECT user_type FROM user_account WHERE username=? limit 1', [theName])
 		rows = cust_or_vend.fetchall()
-		if rows != []:
-			is_vendor = True
-		for p in tempvariables.all_projects:
-			if p['author'] == theName:
-				campaigns.append(p)
+		for r in rows:
+			if r[0] == 'vendor':
+				is_vendor = True
+		if is_vendor:
+			for p in tempvariables.all_projects:
+				if p['author'] == theName:
+					campaigns.append(p)
+		else:
+			#user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
+			print "he's a consumer"
 		return render_template("all_projects.html", projects = campaigns)
 
 # MY VENDOR PAGE
@@ -86,27 +91,22 @@ def register():
 
 	theusername = request.args.get('username')
 	thepassword = request.args.get('password')
-	checkmark = request.form.get('boolVendor') # this will either be 'vendor' or 'customer'
+	checkmark = request.args.get('boolVendor') # this will either be 'vendor' or 'customer'
 
 	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
 	rows = account_exists.fetchall()
-	exists = 0;
+	exists = 0
 	for i in rows:
 		if i[0] == theusername:
 			print "username already exists"
 			exists = 1
 	if exists == 0:
-		g.db.execute('INSERT INTO user_account (username, password, address) \
-					 values (?, ?, ?)',
+		g.db.execute('INSERT INTO user_account (username, password, address, user_type) \
+					 values (?, ?, ?, ?)',
 					 [theusername, 
 					  thepassword, 
-					  '1234 Smith Street'])
-		if (checkmark == 'customer'):
-			g.db.execute('INSERT INTO consumer_account (username) values (?)',
-						 [theusername])
-		else:
-			g.db.execute('INSERT INTO vendor_account (username) values (?)',
-						 [theusername])
+					  '1234 Smith Street',
+					  checkmark])
 		g.db.commit()
 		session['logged_in'] = True
 		theName = theusername
@@ -140,23 +140,6 @@ def logout():
 	session['logged_in'] = False
 	theName = ""
 	return redirect(url_for('all_projects'))
-
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if request.form['username'] != app.config['USERNAME']:
-#             error = 'Invalid username'
-#         elif request.form['password'] != app.config['PASSWORD']:
-#             error = 'Invalid password'
-#         else:
-#             session['logged_in'] = True
-#             flash('You were logged in')
-#             return redirect(url_for('show_entries'))
-#     return render_template('login.html', error=error)
-	
-
 
 @app.route('/vendor_home')
 @login_required
@@ -217,6 +200,15 @@ def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vend
 
 @app.route('/add_product', methods = ['POST']) 
 def add_product():
+	campaign_exists_qs = g.db.execute('SELECT * FROM campaign WHERE campaign_name=? AND vendor_name=?',
+								   (request.form['campaign_name'],
+									request.form['vendor_name'])
+								  )
+	campaign_exists = campaign_exists_qs.fetchall()
+	if campaign_exists == []:
+		print "This campaign already exists"
+		return render_template("add_project.html")
+	
 	g.db.execute('INSERT INTO campaign (campaign_name, price, image, descr, descr_simple, num_pledges, vendor_name) \
 				  values (?, ?, ?, ?, ?, ?, ?)',
 				  (request.form['campaign_name'],

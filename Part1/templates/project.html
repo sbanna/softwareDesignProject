@@ -20,7 +20,7 @@
 		                        </div>
 		                    </div><!--end: .top-project-info -->
 		                    <div class="bottom-project-info clearfix">
-		                        <div class="project-progress sys_circle_progress" data-percent="20">
+		                        <div class="project-progress sys_circle_progress" data-percent="{{campaign.percentCommitted}}">
 		                            <div class="sys_holder_sector"></div>
 		                        </div>
 		                        <div class="group-fee clearfix">
@@ -30,13 +30,13 @@
 		                            </div>
 		                            <div class="sep"></div>
 		                            <div class="fee-item">
-		                                <p class="rs lbl">Pledged</p>
-		                                <span class="val">$38,000</span>
+		                                <p class="rs lbl">Next Price Point</p>
+		                                <span class="val">{{campaign.nextPrice}}</span>
 		                            </div>
-		                            <div class="sep"></div>
+									<div class="sep"></div>
 		                            <div class="fee-item">
-		                                <p class="rs lbl">Days Left</p>
-		                                <span class="val">25</span>
+		                                <p class="rs lbl">Buyers Until<br>Next Price Point</p>
+		                                <span class="val">{{campaign.nextCommitAmount}}</span>
 		                            </div>
 		                        </div>
 		                        <div class="clear"></div>
