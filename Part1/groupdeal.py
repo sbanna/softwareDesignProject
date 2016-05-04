@@ -58,7 +58,7 @@ def all_projects():
 					campaigns.append(p)
 		else:
 			#user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
-			print "he's a consumer"
+			campaigns = tempvariables.all_projects
 		return render_template("all_projects.html", projects = campaigns)
 
 # MY VENDOR PAGE
@@ -194,25 +194,32 @@ def add_user():
 def create_product():
 	return render_template("create_product.html")
 	
-def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vendor, price_2 = 'n/a'):
+def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vendor, 
+				  price_2, price_3, amount_2, amount_3):
+	prices = [price, price_2, price_3]
+	amounts = [amount_2, amount_3]
 	dict = "\t\t{\r\t\t\t'image':'%s',\
 			\r\t\t\t'title':'%s',\
 			\r\t\t\t'author':'%s',\
 			\r\t\t\t'shortDescription':'%s',\
+			\r\t\t\t'description':'%s',\
 			\r\t\t\t'currentPrice':%s,\
 			\r\t\t\t'amountCommitted':%s,\
 			\r\t\t\t'daysLeft':99,\
 			\r\t\t\t'nextPrice':%s,\
-			\r\t\t\t'nextCommitAmount':99,\
+			\r\t\t\t'nextCommitAmount':%s,\
 			\r\t\t\t'percentCommitted':99,\
-			\r\t\t},\r" % (image_str,name,vendor,descr_simple,price,num_pledges, price_2)
-	file = open('./tempvariables.py', 'r+')
+			\r\t\t\t'prices':[%s, %s],\
+			\r\t\t\t'amount_per_price':[%s, %s],\
+			\r\t\t},\r" % (image_str,name,vendor,descr_simple,descr,price,num_pledges, 
+						   price_2, amount_2, price_2, price_3, amount_2, amount_3)
+	file = open('Part1/tempvariables.py', 'r+')
 	contents = file.readlines()
 	file.close()
 	
 	contents.insert(13, dict)
 	
-	file = open('./tempvariables.py', 'w')
+	file = open('Part1/tempvariables.py', 'w')
 	contents = "".join(contents)
 	file.write(contents)
 	file.close()
@@ -224,7 +231,7 @@ def add_product():
 									request.form['vendor_name'])
 								  )
 	campaign_exists = campaign_exists_qs.fetchall()
-	if campaign_exists == []:
+	if campaign_exists != []:
 		print "This campaign already exists"
 		return render_template("add_project.html")
 	
@@ -246,7 +253,10 @@ def add_product():
 				   request.form['descr_simple'], 
 				   0, 
 				   request.form['vendor_name'],
-				   request.form['price_2'])
+				   request.form['price_2'],
+				   request.form['price_3'],
+				   request.form['amount_2'],
+				   request.form['amount_3'])
 	
 	#get the id of the campaign we just created
 	campaign_qs = g.db.execute('SELECT campaign_id FROM campaign ORDER BY campaign_id DESC LIMIT 1')
@@ -263,18 +273,6 @@ def add_product():
 	if (request.form['price_3']):
 		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
 					 (campaign, "200", request.form['price_3']))
-	
-	if (request.form['price_4']):
-		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
-					 (campaign, "300", request.form['price_4']))
-					 
-	if (request.form['price_5']):
-		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
-					 (campaign, "400", request.form['price_5']))
-	
-	if (request.form['price_6']):
-		g.db.execute('INSERT INTO price_points (campaign_id, pledge_num, new_price) VALUES (?, ?, ?)',
-					 (campaign, "500", request.form['price_6']))
 	
 	g.db.commit()
 	
