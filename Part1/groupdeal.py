@@ -64,60 +64,64 @@ def add_campaign():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-	global theName;
-	
-	theusername = request.args.get('username');
-	thename = request.args.get('name');
-	thepassword = request.args.get('password');
-	checkmark = request.form.get('boolVendor')
+	global theName
 
-	# Rob do something with these variables
-	print(theusername)
-	print(thename)
-	print(checkmark) ## this will either be 'vendor' or 'customer'
-	session['logged_in'] = True;
-	theName = thename;
+	theusername = request.args.get('username')
+	thepassword = request.args.get('password')
+	checkmark = request.form.get('boolVendor') # this will either be 'vendor' or 'customer'
+
+	account_exists = g.db.execute('select username from user_account where username=?', [theusername])
+	rows = account_exists.fetchall()
+	exists = 0;
+	for i in rows:
+		if i[0] == theusername:
+			print "username already exists"
+			exists = 1
+	if exists == 0:
+		g.db.execute('INSERT INTO user_account (username, password, address) \
+					 values (?, ?, ?)',
+					 [theusername, 
+					  thepassword, 
+					  '1234 Smith Street'])
+		if (checkmark == 'customer'):
+			g.db.execute('INSERT INTO consumer_account (username) values (?)',
+						 [theusername])
+		else:
+			g.db.execute('INSERT INTO vendor_account (username) values (?)',
+						 [theusername])
+		g.db.commit()
+		session['logged_in'] = True
+		theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-	global theName;
+	global theName
 	
-	theusername = request.args.get('username');
-	thepassword = request.args.get('password');
-	# Rob do something with these variables
-	print(theusername)
-	print(thepassword)
+	theusername = request.args.get('username')
+	thepassword = request.args.get('password')
+
+	account_exists = g.db.execute('select username from user_account where username=? and password=?', 
+								  [theusername, thepassword])
+	rows = account_exists.fetchall()
+	if rows == []:
+		exists = 0
+	else:
+		exists = 1
 
 	# if things work set the below variable accordingly
-	session['logged_in'] = True;
-	theName = thename;
+	if exists:
+		session['logged_in'] = True
+		theName = theusername
 	return redirect(url_for('all_projects'))
 
 @app.route('/logout')
 def logout():
-	global theName;
-	global logged_in;
-	session.pop('logged_in', None);
-	theName = "";
+	global theName
+
+	session['logged_in'] = False
+	theName = ""
 	return redirect(url_for('all_projects'))
-
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if request.form['username'] != app.config['USERNAME']:
-#             error = 'Invalid username'
-#         elif request.form['password'] != app.config['PASSWORD']:
-#             error = 'Invalid password'
-#         else:
-#             session['logged_in'] = True
-#             flash('You were logged in')
-#             return redirect(url_for('show_entries'))
-#     return render_template('login.html', error=error)
-	
-
 
 @app.route('/vendor_home')
 @login_required
