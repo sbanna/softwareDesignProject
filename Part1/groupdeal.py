@@ -36,18 +36,16 @@ app.config.from_object(__name__)
 # GETS ALL CAMPAIGNS, STORES IN projects VARIABLE 
 @app.route('/', methods=['GET'])
 def all_projects():
+	return render_template("all_projects.html", projects = tempvariables.all_projects)
+		
+@app.route('/home', methods=['GET'])
+def user_home():
 	if not session['logged_in']:
 		return render_template("all_projects.html", projects = tempvariables.all_projects)
 	else:
-		# this isn't done I need a contributions page and vender/customer func
-		#user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
-		#projects = []
-		#for p in tempvariables.all_projects:
-		#	if p['']:
-		#		print ""
 		is_vendor = False
 		campaigns = []
-		cust_or_vend = g.db.execute('SELECT user_type FROM user_account WHERE username=? limit 1', [theName])
+		cust_or_vend = g.db.execute('SELECT user_type FROM user_account WHERE username=?', [theName])
 		rows = cust_or_vend.fetchall()
 		for r in rows:
 			if r[0] == 'vendor':
@@ -57,8 +55,13 @@ def all_projects():
 				if p['author'] == theName:
 					campaigns.append(p)
 		else:
-			#user_campaigns_qs = g.db.execute('select campaign_name from campaign where')
-			campaigns = tempvariables.all_projects
+			user_campaigns_qs = g.db.execute('SELECT consumer_name FROM contributions WHERE campaign_name=?',
+											  [theName])
+			user_campaigns = user_campaigns_qs.fetchall()
+			for c in user_campaigns:
+				for p in tempvariables.all_projects:
+					if p['title'] == c[0]:
+						campaigns.append(p)
 		return render_template("all_projects.html", projects = campaigns)
 
 # MY VENDOR PAGE
@@ -82,7 +85,17 @@ def my_pledges():
 # ADD A NEW PRODUCT
 @app.route('/add_campaign')
 def add_campaign():
-	return render_template("add_project.html")
+	is_vendor = False
+	campaigns = []
+	cust_or_vend = g.db.execute('SELECT user_type FROM user_account WHERE username=?', [theName])
+	rows = cust_or_vend.fetchall()
+	for r in rows:
+		if r[0] == 'vendor':
+			is_vendor = True
+	if is_vendor:
+		return render_template("add_project.html")
+	else:
+		return redirect(url_for('all_projects'))
 
 # this is the checkout form
 # ex: http://127.0.0.1:5000/checkout?campaign=RobTHISONE&price=32
@@ -93,15 +106,68 @@ def checkout():
 	price = request.args.get('price')
 	return render_template("checkout.html",campaign=campaign,amount=price)
 
-
+#not complete
+def inc_backers(campaign_name):
+	image = tempvariables.all_projects['image'];
+	title = tempvariables.all_projects['title'];
+	author = tempvariables.all_projects['author'];
+	shortDescription = tempvariables.all_projects['shortDescription'];
+	description = tempvariables.all_projects['description'];
+	currentPrice = tempvariables.all_projects['currentPrice'];
+	amountCommitted = tempvariables.all_projects['amountCommitted'] + 1;
+	nextPrice = tempvariables.all_projects['nextPrice'];
+	nextCommitAmount = tempvariables.all_projects['nextCommitAmount'];
+	percentCommitted = amountCommitted  * 100 / nextCommitAmount;
+	prices = tempvariables.all_projects['prices'];
+	amount_per_price = tempvariables.all_projects['amount_per_price'];
+	dict = "\t\t{\r\t\t\t'image':'%s',\
+			\r\t\t\t'title':'%s',\
+			\r\t\t\t'author':'%s',\
+			\r\t\t\t'shortDescription':'%s',\
+			\r\t\t\t'description':'%s',\
+			\r\t\t\t'currentPrice':%s,\
+			\r\t\t\t'amountCommitted':%s,\
+			\r\t\t\t'daysLeft':99,\
+			\r\t\t\t'nextPrice':%s,\
+			\r\t\t\t'nextCommitAmount':%s,\
+			\r\t\t\t'percentCommitted':%s,\
+			\r\t\t\t'prices':[%s, %s],\
+			\r\t\t\t'amount_per_price':[%s, %s],\
+			\r\t\t},\r" % (image,title,author,shortDescription,description,
+						   currentPrice,amountCommitted, nextPrice, nextCommitAmount, 
+						   percentCommitted, prices[0], prices[1], 
+						   amount_per_price[0], amount_per_price[1])
+						   
+	file = open('Part1/tempvariables.py', 'r+')
+	contents = file.readlines()
+	file.close()
+	
+	index = 0
+	str = "\t\t\t'image':'%s'," % (image)
+	for c in contents:
+		if c == str:
+			print "yes"
+	contents.insert(13, dict)
+	
+	file = open('Part1/tempvariables.py', 'w')
+	contents = "".join(contents)
+	file.write(contents)
+	file.close()
+	
+	
 # this is the checkout function
 @app.route('/checkedout', methods = ['POST']) 
 def checkedout():
-	name = request.args.get('name')
-	campaign = request.args.get('campaign')
-	price = request.args.get('price')
+	name = request.form['name']
+	campaign = request.form['campaign']
+	price = request.form['price']
 	# do whatever you want with the above
-	return redirect(url_for('all_projects'))
+	g.db.execute('INSERT INTO contributions (campaign_name, consumer_name, amount)\
+				  VALUES (?, ?, ?)',
+				  (name, campaign, price))
+	g.db.commit()
+	
+	return redirect(url_for('user_home'))
 
 
 @app.route('/register', methods=['GET','POST'])
@@ -160,14 +226,14 @@ def logout():
 	theName = ""
 	return redirect(url_for('all_projects'))
 
-@app.route('/vendor_home')
+'''@app.route('/vendor_home')
 @login_required
 def vendor_home():
-	return render_template('vendor_home.html')
+	return render_template('vendor_home.html')'''
 	
-@app.route('/sign_up')
+'''@app.route('/sign_up')
 def sign_up():
-	return render_template('sign_up.html')
+	return render_template('sign_up.html')'''
 	
 @app.route('/add_user', methods=['POST'])
 def add_user():
@@ -291,27 +357,27 @@ def campaign():
 			curr_campaign = i
 	return render_template("project.html", campaign = curr_campaign, priceandamount = zip(curr_campaign.get('prices'),curr_campaign.get('amount_per_price')))
 	
-@app.route('/edit_project')
+'''@app.route('/edit_project')
 def projectForm():
-	return render_template("add_project.html", projects = tempvariables.all_projects)
+	return render_template("add_project.html", projects = tempvariables.all_projects)'''
 
-@app.route('/choose_product')
+'''@app.route('/choose_product')
 def choose_product():
-	return render_template("choose_product.html")
+	return render_template("choose_product.html")'''
 	
-@app.route('/pledge', methods = ['GET', 'POST'])
+'''@app.route('/pledge', methods = ['GET', 'POST'])
 @login_required
 def add_pledge():
 	g.db.execute('INSERT INTO contributions (product_id, consumer_id, amount) values (?, ?, ?)',
 				 [request.form['product_id'], request.form['consumer_id'], request.form['amount']])
 	g.db.commit()
 	flash("Pledge was successfully added")
-	return redirect(url_for('simple_campaign'))
+	return redirect(url_for('simple_campaign'))'''
 
-@app.route('/consumer_home')
+'''@app.route('/consumer_home')
 @login_required
 def consumer_home():
-	return render_template('consumer_home.html')
+	return render_template('consumer_home.html')'''
 	
 def connect_db():
 	return sqlite3.connect(app.config['DATABASE'])
@@ -332,7 +398,7 @@ def teardown_request(exception):
 	if db is not None:
 		db.close()
 		
-#This is the login page
+'''#This is the login page
 @app.route('/mylogin', methods = ['post','get'])
 def login_page():
   global users
@@ -389,7 +455,7 @@ def create():
       # followFriend("") 
       return redirect(url_for("login_page"))
 
-  return render_template("create.html")
+  return render_template("create.html")'''
 
 	
 if __name__ == '__main__':

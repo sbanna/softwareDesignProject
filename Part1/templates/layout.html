@@ -54,13 +54,13 @@
                 <div class="grid_12">
                     <nav class="top-menu">
                         <ul id="main-menu" class="nav nav-horizontal clearfix">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            {% if session.logged_in %}
+                            <li class="active"><a href="{{ url_for('user_home') }}">Home</a></li>
+                            <!--{% if session.logged_in %}
                                 <li class="sep"></li>
                                 <li><a href="all-pages.html">My Pledges</a></li>
                                 <li class="sep"></li>
                                 <li><a href="how-it-work.html">My Campaigns</a></li>
-                            {% endif %}
+                            {% endif %}-->
                         </ul>
                         <a id="btn-toogle-menu" class="btn-toogle-menu" href="#alternate-menu">
                             <span class="line-bar"></span>
@@ -69,7 +69,7 @@
                         </a>
                         <div id="right-menu">
                             <ul class="alternate-menu">
-                                <li><a href="{{ url_for('all_projects') }}">Home</a></li>
+                                <li><a href="{{ url_for('user_home') }}">Home</a></li>
                                 {% if session.logged_in %}
                                     <li><a href="{{ url_for('my_pledges') }}">My Pledges</a></li>
                                     <li><a href="{{ url_for('my_campaigns') }}">My Campaigns</a></li>
@@ -147,11 +147,11 @@
                                     <input name="username" id="txt_name" class="txt fill-width" type="text" placeholder="Username"/>
                                 </label>
                                 <div class="wrap-2col clearfix">
-                                    <div class="col">
+                                    <!--<div class="col">
                                         <label for="txt_re_email">
                                             <input name="name" id="name" class="txt fill-width" type="text" placeholder="Enter your name"/>
                                         </label>
-                                    </div>
+                                    </div>-->
                                     <div class="col">
                                         <label for="txt_password">
                                             <input name="password" id="txt_password" class="txt fill-width" type="password" placeholder="Enter password"/>
