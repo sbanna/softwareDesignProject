@@ -123,7 +123,6 @@ def inc_backers(campaign_name):
 		if i > cam_start:
 			for j in range(15):
 				contents.remove(contents[i])
-				print contents[i].strip()
 			break;
 
 	image = tempvariables.all_projects[index]['image'];
@@ -296,7 +295,7 @@ def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vend
 			\r\t\t\t'daysLeft':99,\
 			\r\t\t\t'nextPrice':%s,\
 			\r\t\t\t'nextCommitAmount':%s,\
-			\r\t\t\t'percentCommitted':99,\
+			\r\t\t\t'percentCommitted':0,\
 			\r\t\t\t'prices':[%s, %s],\
 			\r\t\t\t'amount_per_price':[%s, %s],\
 			\r\t\t},\r" % (image_str,name,vendor,descr_simple,descr,price,num_pledges, 
