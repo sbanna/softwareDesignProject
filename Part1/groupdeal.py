@@ -204,13 +204,13 @@ def write_to_file(name, price, image_str, descr, descr_simple, num_pledges, vend
 			\r\t\t\t'nextCommitAmount':99,\
 			\r\t\t\t'percentCommitted':99,\
 			\r\t\t},\r" % (image_str,name,vendor,descr_simple,price,num_pledges, price_2)
-	file = open('Part1/tempvariables.py', 'r+')
+	file = open('./tempvariables.py', 'r+')
 	contents = file.readlines()
 	file.close()
 	
 	contents.insert(13, dict)
 	
-	file = open('Part1/tempvariables.py', 'w')
+	file = open('./tempvariables.py', 'w')
 	contents = "".join(contents)
 	file.write(contents)
 	file.close()
@@ -278,7 +278,7 @@ def campaign():
 	for i in tempvariables.all_projects:
 		if i['title'] == campaign_name and i['author'] == vendor_name:
 			curr_campaign = i
-	return render_template("project.html", campaign = curr_campaign)
+	return render_template("project.html", campaign = curr_campaign, priceandamount = zip(curr_campaign.get('prices'),curr_campaign.get('amount_per_price')))
 	
 @app.route('/edit_project')
 def projectForm():
