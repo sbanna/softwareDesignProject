@@ -83,25 +83,27 @@
 		                </div>
 		            </div><!--end: .project-runtime -->
 		            <!-- REMOVED PROJECT AUTHOR -->
-		            <div class="clear clear-2col"></div>
+					<div class="clear clear-2col"></div>
+		            {% for price,amount in priceandamount %}
 		            <div class="wrap-nav-pledge">
 		                <ul class="rs nav nav-pledge accordion">
 		                    <li>
 		                        <div class=" pledge-label accordion-label clearfix">
 		                            <i class="icon iPlugGray"></i>
-		                            <span class="pledge-amount">Pledge $50 or less</span>
-		                            <span class="count-val">(12 needed)</span>
+		                            <span class="pledge-amount">Pledge ${{price}} or less</span>
+		                            <span class="count-val">({{amount}} needed)</span>
 		                        </div>
 		                        <div class=" pledge-content accordion-content">
 		                            <div class="pledge-detail">
-		                                <p class="rs pledge-description">Wish to buy this item at a lower rate? Think it should be $12. Pledge it! If enough people are interested the price will go down! You will only be charged for this product if we are able to meet this price.</p>
+		                                <p class="rs pledge-description">Wish to buy this item at a lower rate? Think it should be ${{price}}. Pledge it! If enough people are interested the price will go down! You will only be charged for this product if we are able to meet this price.</p>
 		                                <p class="rs fw-b pb20">Ocupated (2 of 10)</p>
-		                                <p class="rs ta-c"><a class="btn big btn-red" href="#">Pledge at $50</a></p>
+		                                <p class="rs ta-c"><a class="btn big btn-red" href="#">Pledge at ${{price}}</a></p>
 		                            </div>
 		                        </div>
 		                    </li><!--end: pledge-item -->
 		                </ul>
 		            </div><!--end: .wrap-nav-pledge -->
+		            {% endfor %}
 		        </div><!--end: .sidebar -->
 		        <div class="clear"></div>
 		    </div>

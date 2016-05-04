@@ -11,7 +11,33 @@ campaign = {'title': 'The Campaign',
 
 # data relating all projects in the database
 all_projects = [
-		{			'image':'http://i.imgur.com/VUd7QZe.jpg',						'title':'Product',						'author':'Rob',						'shortDescription':'This is a thing',						'currentPrice':50,						'amountCommitted':0,						'daysLeft':99,						'nextPrice':0,						'nextCommitAmount':99,						'percentCommitted':99,					},		{			'image':'http://i.imgur.com/no3t9ib.gif',						'title':'Product',						'author':'Rob',						'shortDescription':'This is a thing',						'currentPrice':5,						'amountCommitted':0,						'daysLeft':99,						'nextPrice':4,						'nextCommitAmount':99,						'percentCommitted':99,					},		{
+
+		{
+			'image':'http://i.imgur.com/VUd7QZe.jpg',			
+			'title':'Product',			
+			'author':'Rob',			
+			'shortDescription':'This is a thing',			
+			'currentPrice':50,			
+			'amountCommitted':0,			
+			'daysLeft':99,			
+			'nextPrice':0,			
+			'nextCommitAmount':99,			
+			'percentCommitted':99,			
+		},
+		{
+			'image':'http://i.imgur.com/no3t9ib.gif',			
+			'title':'Product',			
+			'author':'Rob',			
+			'shortDescription':'This is a thing',			
+			'currentPrice':5,			
+			'amountCommitted':0,			
+			'daysLeft':99,			
+			'nextPrice':4,			
+			'nextCommitAmount':99,			
+			'percentCommitted':99,			
+		},
+		{
+
 			'image':'http://i.imgur.com/no3t9ib.gif',			
 			'title':'Rick',			
 			'author':'Rob',			
@@ -33,19 +59,23 @@ all_projects = [
 			'daysLeft':99,			
 			'nextPrice':40,			
 			'nextCommitAmount':99,			
-			'percentCommitted':99,			
+			'percentCommitted':99,
+			'prices':[90,80,70],			
 		},
-		{
+		{   
 			'image':'http://i.imgur.com/VUd7QZe.jpg',			
 			'title':'Product',			
-			'author':'Rob',			
-			'shortDescription':'Sad',			
+			'author':'RobTHISONE',			
+			'shortDescription':'Saad',
+			'description': 'insadisndisan', #THIS NEEDS TO BE ADDED			
 			'currentPrice':50,			
 			'amountCommitted':0,			
 			'daysLeft':99,			
 			'nextPrice':40,			
 			'nextCommitAmount':99,			
-			'percentCommitted':99,			
+			'percentCommitted':99,
+			'prices':[90,80,70], 
+			'amount_per_price':[100,200,300], #THIS NEEDS TO BE ADDED
 		},
 		{
 			'image':'http://lorempixel.com/400/300/', 
