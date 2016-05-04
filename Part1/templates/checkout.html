@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="layout-2cols">
+        <div class="content grid_8">
+            <div class="single-page">
+                <div class="wrapper-box box-post-comment">
+                    <h2 class="common-title">Checkout</h2>
+                    <div class="box-white">
+                        <form id="contact-form" class="clearfix" action="{{ url_for('checkedout') }}" method="POST">
+                            <p>Cart:</p>
+                            <p>Item: {{campaign}}</p>
+                            <p>Amount: ${{amount}}</p>
+							<div class="form form-post-comment">
+								<div class="input"> 
+									<input type="hidden" name="campaign" value="{{campaign}}"/>
+									<input type="hidden" name="price" value="{{amount}}"/>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="name" class="txt fill-width txt-name" placeholder="Name"/>
+									</label>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="text" name="vendor_name" class="txt fill-width txt-name" placeholder="Address"/>
+									</label>
+									<div class="layout-3cols">
+										<div class="content grid_4">
+											<label for="txt_name_contact">	
+												<input id="txt_name_contact" type="text" name="city" class="txt fill-width txt-name" placeholder="City"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">	
+												<input id="txt_name_contact" type="text" name="state" class="txt fill-width txt-name" placeholder="State"/> 
+											</label>
+										</div>
+										<div class="content grid_4">
+											<label for="txt_name_contact">	
+												<input id="txt_name_contact" type="text" name="zipcode" class="txt fill-width txt-name" placeholder="ZipCode"/> 
+											</label>
+										</div>
+									</div>
+									<label for="txt_name_contact">
+										<input id="txt_name_contact" type="password" name="card" class="txt fill-width txt-name" placeholder="Credit Card Number"/>
+									</label>
+								</div>
+								<div class="clear"></div>
+								<p class="rs ta-r clearfix">
+									<span id="response"></span>
+                                  
+									<input type="submit" class="btn btn-white btn-submit-comment" name="submit" value="Create">
+								</p>
+                            </div>
+                        </form>
+                    </div>
+                </div><!--end: .box-list-comment -->
+            </div>
+        </div><!--end: .content -->
+        <div class="clear"></div>
+    </div>
+{% endblock %}
+</html>
