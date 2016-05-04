@@ -8,15 +8,15 @@ This repository is for the GroupDeal website. It contains all files necessary fo
 
 #### Part 1
 ##### static
-  - contains most of the front-end code NOT including HTML. Includes CSS and AJAX files.
+  \- contains most of the front-end code NOT including HTML. Includes CSS and AJAX files
 ##### templates
-  - contains HTML layouts for all sections of the GroupDeal website
+  \- contains HTML layouts for all sections of the GroupDeal website
 ##### groupdeal.py, groupdeal.pyc, tempvariables.py
-  -contains Flask code used in running the site
+  \-contains Flask code used in running the site
 ##### groupdeal.db, schema.sql
-  - GroupDeal database and SQL schema
-##### groupdeal_test, groupdeal_test.py, groupdeal_test~, groupdeal_test.py~
-  - files used for unit testing
+  \- GroupDeal database and SQL schema
+##### groupdeal\_test, groupdeal\_test.py, groupdeal\_test~, groupdeal_test.py~
+  \- files used for unit testing
   
 ###  TO RUN LOCALLY
 GroupDeal uses Flask, a Python microframework, to run in a virtual environment. To use GroupDeal locally, you can follow these steps:
